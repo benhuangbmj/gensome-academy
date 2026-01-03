@@ -3,8 +3,8 @@ function loadAllSprites() {
     sliceX: 6,
     anims: {
       shine: {
-        frames: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 4, 5, 3],
-        speed: 24,
+        frames: Array(90).fill(0).concat([1, 2, 4, 5, 3]),
+        speed: 30,
         loop: true,
       },
     },
