@@ -1,4 +1,4 @@
-import loadAllSprites from "./loadSprite";
+import loadAllSprites from "./utils/loadSprites";
 import utils from "/src/utils.js";
 export default function gensomeAcademy({ TILE_WIDTH, TILE_HEIGHT }) {
   // loadAllSprites();

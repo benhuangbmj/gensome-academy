@@ -1,7 +1,11 @@
 import progressBar from "../../components/progressBar";
-import loadAllSprites from "./loadSprite";
+import utilsScene from "./utils";
+import generateUserStatus from "./gameObjs/userStatus";
+const COIN_HEIGHT = 40;
 export default function gensomeAcademy() {
-  loadAllSprites();
+  const user = utilsScene.generateUser();
+  utilsScene.loadSprites();
+  const { userStatus, cash } = generateUserStatus(user);
   onAdd("girl", (obj) => {
     const addProgress = obj.onUpdate(() => {
       if (obj.width > 0) {
@@ -12,15 +16,16 @@ export default function gensomeAcademy() {
             duration: 1,
             offset: vec2(0, 15).add(vec2(0, obj.height)),
             loop: true,
+            onComplete() {
+              user.cash++;
+              cash.text = `${user.cash}`;
+            },
           })
         );
         addProgress.cancel();
       }
     });
   });
-  const girl = add([
-    sprite("girl", { anim: "down", width: 100 }),
-    pos(center()),
-    "girl",
-  ]);
+  add([sprite("girl", { anim: "down", width: 100 }), pos(center()), "girl"]);
+  utilsScene.saveGame({ user });
 }
