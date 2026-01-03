@@ -1,6 +1,6 @@
 import progressBar from "../../components/progressBar";
 import utilsScene from "./utils";
-import generateUserStatus from "./gameObjs/userStatus";
+import generateUserStatus from "./gameObjs/UI/userStatus";
 const COIN_HEIGHT = 40;
 export default function gensomeAcademy() {
   const user = utilsScene.generateUser();
