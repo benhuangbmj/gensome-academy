@@ -1,4 +1,4 @@
-function loadAllSprites() {
+export default function loadSprites() {
   loadSprite("coin", "sprites/shining-star-coin.png", {
     sliceX: 6,
     anims: {
@@ -23,4 +23,3 @@ function loadAllSprites() {
     },
   });
 }
-export default loadAllSprites;
