@@ -6,6 +6,7 @@ export default function progressBar({
   backgroundColor = rgb(160, 160, 160),
   borderColor = rgb(0, 0, 0),
   offset = vec2(0, 0),
+  loop = false,
   onComplete,
 } = {}) {
   let elapsed = 0;
@@ -16,7 +17,11 @@ export default function progressBar({
     id: "progressBar",
     require: ["pos"],
     update() {
-      if (finished || duration <= 0) return;
+      if (finished || duration <= 0) {
+        if (loop) {
+          this.resetProgress();
+        } else return;
+      }
       elapsed = Math.min(elapsed + dt(), duration);
       if (elapsed >= duration) {
         finished = true;
@@ -69,7 +74,7 @@ export default function progressBar({
         }
       }
     },
-    reset() {
+    resetProgress() {
       elapsed = 0;
       finished = false;
     },
