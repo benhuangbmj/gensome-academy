@@ -50,17 +50,13 @@ export default function progressBar({
                 2
           )
       );
-      const innerRadius = Math.min(innerHeight, innerWidth);
       if (innerWidth > 0) {
         if (innerWidth <= innerHeight) {
-          drawEllipse({
+          drawCircle({
             pos: offset.add(vec2(OUTLINE / 2, 0)),
-            radiusX: innerWidth / 2,
-            radiusY:
-              (innerHeight / 2) * (0.5 + (innerWidth / innerHeight) * 0.5),
+            radius: innerWidth / 2,
             color: fillColor,
             anchor: "left",
-            radius: innerRadius,
           });
         } else {
           drawRect({
