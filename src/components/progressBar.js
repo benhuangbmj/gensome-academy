@@ -6,28 +6,30 @@ export default function progressBar(
     fillColor = rgb(0, 255, 100),
     backgroundColor = rgb(160, 160, 160),
     borderColor = rgb(0, 0, 0),
+    outline = 2,
     offset = vec2(0, 0),
     loop = false,
-    onComplete,
+    onProgressFinished,
   } = {}
 ) {
   let elapsed = 0;
   let finished = false;
-  const OUTLINE = 2;
+  let _onProgressFinished = onProgressFinished;
+  let _loop = loop;
 
   return {
     id: "progressBar",
     require: ["pos"],
     update() {
       if (finished || duration <= 0) {
-        if (loop) {
+        if (_loop) {
           this.resetProgress();
         } else return;
       }
       elapsed = Math.min(elapsed + dt(), duration);
       if (elapsed >= duration) {
         finished = true;
-        onComplete?.(this);
+        _onProgressFinished?.(this);
       }
     },
     draw() {
@@ -37,37 +39,28 @@ export default function progressBar(
         height,
         color: backgroundColor,
         anchor: "left",
-        outline: { width: OUTLINE, color: borderColor },
+        outline: { width: outline, color: borderColor },
         radius: height,
       });
       const fillRatio = duration > 0 ? elapsed / duration : 1;
-      const innerWidth = Math.max(0, width - OUTLINE) * fillRatio;
-      const innerHeight = Math.min(
-        height - OUTLINE,
-        2 *
-          Math.sqrt(
-            ((height - OUTLINE) / 2) ** 2 -
-              ((height - OUTLINE) / 2 -
-                Math.min(innerWidth, (height - OUTLINE) / 2)) **
-                2
-          )
-      );
+      const innerWidth = Math.max(0, width - outline) * fillRatio;
+      const innerHeight = height - outline;
       if (innerWidth > 0) {
         if (innerWidth <= innerHeight) {
           drawCircle({
-            pos: offset.add(vec2(OUTLINE / 2, 0)),
+            pos: offset.add(vec2(outline / 2, 0)),
             radius: innerWidth / 2,
             color: fillColor,
             anchor: "left",
           });
         } else {
           drawRect({
-            pos: offset.add(vec2(OUTLINE / 2, 0)),
+            pos: offset.add(vec2(outline / 2, 0)),
             width: innerWidth,
-            height: height - OUTLINE,
+            height: height - outline,
             color: fillColor,
             anchor: "left",
-            radius: height - OUTLINE,
+            radius: height - outline,
           });
         }
       }
@@ -76,8 +69,20 @@ export default function progressBar(
       elapsed = 0;
       finished = false;
     },
+    get onProgressFinished() {
+      return _onProgressFinished;
+    },
+    set onProgressFinished(fn) {
+      _onProgressFinished = fn;
+    },
     get progress() {
       return duration > 0 ? elapsed / duration : 1;
+    },
+    set isProgressLooping(val) {
+      _loop = val;
+    },
+    get isProgressLooping() {
+      return _loop;
     },
   };
 }
