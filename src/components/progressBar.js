@@ -1,14 +1,16 @@
-export default function progressBar({
-  width = 120,
-  height = 12,
-  duration = 1,
-  fillColor = rgb(0, 255, 100),
-  backgroundColor = rgb(160, 160, 160),
-  borderColor = rgb(0, 0, 0),
-  offset = vec2(0, 0),
-  loop = false,
-  onComplete,
-} = {}) {
+export default function progressBar(
+  duration = 5,
+  {
+    width = 120,
+    height = 12,
+    fillColor = rgb(0, 255, 100),
+    backgroundColor = rgb(160, 160, 160),
+    borderColor = rgb(0, 0, 0),
+    offset = vec2(0, 0),
+    loop = false,
+    onComplete,
+  } = {}
+) {
   let elapsed = 0;
   let finished = false;
   const OUTLINE = 2;
