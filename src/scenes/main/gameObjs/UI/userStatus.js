@@ -69,7 +69,7 @@ export default function generateUserStatus(user) {
         },
         () => {
           debug.log("Subtracting cash...");
-          user.cash = Math.max(0, user.cash - 100);
+          user.cash = Math.max(0, user.cash - 1000);
         }
       );
     });
@@ -77,11 +77,11 @@ export default function generateUserStatus(user) {
       mouseClickedAction(
         () => {
           debug.log("Adding FP...");
-          user.FP += 10;
+          user.FP += 100;
         },
         () => {
           debug.log("Subtracting FP...");
-          user.FP = Math.max(0, user.FP - 10);
+          user.FP = Math.max(0, user.FP - 100);
         }
       );
     });
