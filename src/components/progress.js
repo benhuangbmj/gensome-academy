@@ -1,4 +1,4 @@
-export default function progressBar(
+export default function progress(
   duration = 5,
   {
     width = 120,
@@ -18,7 +18,7 @@ export default function progressBar(
   let _loop = loop;
 
   return {
-    id: "progressBar",
+    id: "progress",
     require: ["pos"],
     update() {
       if (finished || duration <= 0) {
