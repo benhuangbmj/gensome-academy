@@ -12,6 +12,8 @@ export default function loadSprites() {
   loadSprite("card-table", "sprites/Card Table.png", {
     sliceY: 3,
   });
+  loadSprite("copy-machine", "sprites/Copy Machine.png");
+  loadSprite("gear", "sprites/gear.png");
   loadSprite("girl", "sprites/girl.png", {
     sliceX: 4,
     sliceY: 5,

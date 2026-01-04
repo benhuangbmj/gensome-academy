@@ -1,26 +1,101 @@
 export default function generateUserStatus(user) {
+  let GAP = 10;
+  let WIDTH = Math.min(600, width() - 2 * GAP);
+  let HEIGHT = 70;
+  let TEXT_SIZE = 24;
+  const ICON_WIDTH = (WIDTH - 7 * GAP) / 9;
+  const ICON_HEIGHT = HEIGHT - 2 * GAP;
   const userStatus = add([
-    pos(width() - 410, 10),
-    rect(400, 70),
+    pos(width() - WIDTH - GAP, GAP),
+    rect(WIDTH, HEIGHT),
     outline(4),
     fixed(),
   ]);
-  userStatus.add([
-    sprite("coin", { anim: "shine", height: userStatus.height / 1.5 }),
-    pos(10, (userStatus.height - userStatus.height / 1.5) / 2),
+  const coinIcon = userStatus.add([
+    sprite("coin", { anim: "shine", height: ICON_HEIGHT }),
+    pos(GAP, (userStatus.height - ICON_HEIGHT) / 2),
     area(),
-    "coin",
   ]);
-
-  const cash = userStatus.add([
-    text(`${user.cash}`, { size: 36 }),
-    pos(65, (userStatus.height - 36) / 2),
+  const cashText = userStatus.add([
+    text(`${user.cash}`, { size: TEXT_SIZE }),
+    pos(2 * GAP + ICON_WIDTH, (userStatus.height - TEXT_SIZE) / 2),
     color(BLACK),
   ]);
-  onClick("coin", () => {
-    debug.log("Adding cash...");
-    user.cash++;
-    cash.text = `${user.cash}`;
+  cashText.onUpdate(() => {
+    cashText.text = `${user.cash}`;
   });
-  return { userStatus, cash };
+
+  const facilityIcon = userStatus.add([
+    sprite("copy-machine", { height: ICON_HEIGHT + 10 }),
+    pos(3 * GAP + 3 * ICON_WIDTH, (userStatus.height - ICON_HEIGHT) / 2 - 12.5),
+    area(),
+  ]);
+  const FPText = userStatus.add([
+    text(`${user.FP}`, { size: TEXT_SIZE }),
+    pos(4.5 * GAP + 4 * ICON_WIDTH, (userStatus.height - TEXT_SIZE) / 2),
+    color(BLACK),
+  ]);
+  FPText.onDraw(() => {
+    FPText.text = `${user.FP}`;
+  });
+
+  const gearIcon = userStatus.add([
+    sprite("gear", { height: ICON_HEIGHT }),
+    pos(5.5 * GAP + 6 * ICON_WIDTH, (userStatus.height - ICON_HEIGHT) / 2),
+    area(),
+  ]);
+  const MPText = userStatus.add([
+    text(`${user.MP}`, { size: TEXT_SIZE }),
+    pos(6.5 * GAP + 7 * ICON_WIDTH, (userStatus.height - TEXT_SIZE) / 2),
+    color(BLACK),
+  ]);
+  MPText.onDraw(() => {
+    MPText.text = `${user.MP}`;
+  });
+  function mouseClickedAction(cbLeft, cbRight) {
+    if (isMousePressed("left")) {
+      cbLeft();
+    }
+    if (isMousePressed("right")) {
+      cbRight();
+    }
+  }
+  if (environment === "dev") {
+    coinIcon.onClick(() => {
+      mouseClickedAction(
+        () => {
+          debug.log("Adding cash...");
+          user.cash += 1000;
+        },
+        () => {
+          debug.log("Subtracting cash...");
+          user.cash = Math.max(0, user.cash - 100);
+        }
+      );
+    });
+    facilityIcon.onClick(() => {
+      mouseClickedAction(
+        () => {
+          debug.log("Adding FP...");
+          user.FP += 10;
+        },
+        () => {
+          debug.log("Subtracting FP...");
+          user.FP = Math.max(0, user.FP - 10);
+        }
+      );
+    });
+    gearIcon.onClick(() => {
+      mouseClickedAction(
+        () => {
+          debug.log("Adding MP...");
+          user.MP += 100;
+        },
+        () => {
+          debug.log("Subtracting MP...");
+          user.MP = Math.max(0, user.MP - 100);
+        }
+      );
+    });
+  }
 }

@@ -1,24 +1,23 @@
-import progressBar from "../../components/progressBar";
+import progress from "../../components/progress";
 import utilsScene from "./utils";
-import generateUserStatus from "./gameObjs/UI/userStatus";
-const COIN_HEIGHT = 40;
+import UI from "./gameObjs/UI";
 export default function gensomeAcademy() {
   const user = utilsScene.generateUser();
   utilsScene.loadSprites();
-  const { userStatus, cash } = generateUserStatus(user);
+  for (let generator in UI) {
+    UI[generator](user);
+  }
   onAdd("girl", (obj) => {
     const addProgress = obj.onUpdate(() => {
       if (obj.width > 0) {
         obj.use(
-          progressBar({
+          progress(10, {
             width: obj.width,
             height: Math.max(obj.width / 10, 10),
-            duration: 1,
             offset: vec2(0, 15).add(vec2(0, obj.height)),
             loop: true,
-            onComplete() {
+            onProgressFinished() {
               user.cash++;
-              cash.text = `${user.cash}`;
             },
           })
         );
