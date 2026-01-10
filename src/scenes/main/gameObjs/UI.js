@@ -1,3 +1,4 @@
 import generateUserStatus from "./UI/userStatus";
+import gameTime from "./UI/gameTime";
 
-export default { generateUserStatus };
+export default { generateUserStatus, gameTime };

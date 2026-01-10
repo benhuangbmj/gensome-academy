@@ -3,6 +3,7 @@ import utilsScene from "./utils";
 import UI from "./gameObjs/UI";
 export default function gensomeAcademy() {
   const user = utilsScene.generateUser();
+  utilsScene.trackGameTime(user);
   utilsScene.loadSprites();
   for (let generator in UI) {
     UI[generator](user);
