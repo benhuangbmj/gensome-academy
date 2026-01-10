@@ -1,10 +1,9 @@
 export default function generateUserStatus(user) {
   let GAP = 10;
-  let WIDTH = Math.min(600, width() - 2 * GAP);
-  let HEIGHT = 70;
+  let WIDTH = Math.min(200, width() / 2 - 2 * GAP);
   let TEXT_SIZE = 24;
-  const ICON_WIDTH = (WIDTH - 7 * GAP) / 9;
-  const ICON_HEIGHT = HEIGHT - 2 * GAP;
+  let ICON_HEIGHT = 36;
+  let HEIGHT = 4 * GAP + 3 * ICON_HEIGHT;
   const userStatus = add([
     pos(width() - WIDTH - GAP, GAP),
     rect(WIDTH, HEIGHT),
@@ -13,41 +12,50 @@ export default function generateUserStatus(user) {
   ]);
   const coinIcon = userStatus.add([
     sprite("coin", { anim: "shine", height: ICON_HEIGHT }),
-    pos(GAP, (userStatus.height - ICON_HEIGHT) / 2),
+    pos(GAP, GAP),
     area(),
   ]);
   const cashText = userStatus.add([
     text(`${user.cash}`, { size: TEXT_SIZE }),
-    pos(2 * GAP + ICON_WIDTH, (userStatus.height - TEXT_SIZE) / 2),
+    pos(userStatus.width - GAP, GAP + (ICON_HEIGHT - TEXT_SIZE) / 2),
     color(BLACK),
+    anchor("topright"),
   ]);
   cashText.onUpdate(() => {
     cashText.text = `${user.cash}`;
   });
 
   const facilityIcon = userStatus.add([
-    sprite("copy-machine", { height: ICON_HEIGHT + 10 }),
-    pos(3 * GAP + 3 * ICON_WIDTH, (userStatus.height - ICON_HEIGHT) / 2 - 12.5),
+    sprite("copy-machine", { height: ICON_HEIGHT + 8 }),
+    pos(GAP - 4, 2 * GAP + ICON_HEIGHT - 10),
     area(),
   ]);
   const FPText = userStatus.add([
     text(`${user.FP}`, { size: TEXT_SIZE }),
-    pos(4.5 * GAP + 4 * ICON_WIDTH, (userStatus.height - TEXT_SIZE) / 2),
+    pos(
+      userStatus.width - GAP,
+      2 * GAP + ICON_HEIGHT + (ICON_HEIGHT - TEXT_SIZE) / 2
+    ),
     color(BLACK),
+    anchor("topright"),
   ]);
-  FPText.onDraw(() => {
+  FPText.onUpdate(() => {
     FPText.text = `${user.FP}`;
   });
 
   const gearIcon = userStatus.add([
     sprite("gear", { height: ICON_HEIGHT }),
-    pos(5.5 * GAP + 6 * ICON_WIDTH, (userStatus.height - ICON_HEIGHT) / 2),
+    pos(GAP, 3 * GAP + 2 * ICON_HEIGHT),
     area(),
   ]);
   const MPText = userStatus.add([
     text(`${user.MP}`, { size: TEXT_SIZE }),
-    pos(6.5 * GAP + 7 * ICON_WIDTH, (userStatus.height - TEXT_SIZE) / 2),
+    pos(
+      userStatus.width - GAP,
+      3 * GAP + 2 * ICON_HEIGHT + (ICON_HEIGHT - TEXT_SIZE) / 2
+    ),
     color(BLACK),
+    anchor("topright"),
   ]);
   MPText.onDraw(() => {
     MPText.text = `${user.MP}`;
