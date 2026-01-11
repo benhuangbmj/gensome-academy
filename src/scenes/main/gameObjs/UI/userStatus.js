@@ -3,7 +3,7 @@ export default function generateUserStatus(user) {
   let WIDTH = Math.min(200, width() / 2 - 2 * GAP);
   let TEXT_SIZE = 24;
   let ICON_HEIGHT = 36;
-  let HEIGHT = 4 * GAP + 3 * ICON_HEIGHT;
+  let HEIGHT = 5 * GAP + 4 * ICON_HEIGHT;
   const userStatus = add([
     pos(width() - WIDTH - GAP, GAP),
     rect(WIDTH, HEIGHT),
@@ -21,7 +21,7 @@ export default function generateUserStatus(user) {
     color(BLACK),
     anchor("topright"),
   ]);
-  cashText.onUpdate(() => {
+  cashText.onDraw(() => {
     cashText.text = `${user.cash}`;
   });
 
@@ -39,7 +39,7 @@ export default function generateUserStatus(user) {
     color(BLACK),
     anchor("topright"),
   ]);
-  FPText.onUpdate(() => {
+  FPText.onDraw(() => {
     FPText.text = `${user.FP}`;
   });
 
@@ -60,6 +60,25 @@ export default function generateUserStatus(user) {
   MPText.onDraw(() => {
     MPText.text = `${user.MP}`;
   });
+
+  const trophyIcon = userStatus.add([
+    sprite("tropyhy", { height: ICON_HEIGHT }),
+    pos(GAP, 4 * GAP + 3 * ICON_HEIGHT),
+    area(),
+  ]);
+  const reputationText = userStatus.add([
+    text(`${user.reputation}`, { size: TEXT_SIZE }),
+    pos(
+      userStatus.width - GAP,
+      4 * GAP + 3 * ICON_HEIGHT + (ICON_HEIGHT - TEXT_SIZE) / 2
+    ),
+    color(BLACK),
+    anchor("topright"),
+  ]);
+  reputationText.onDraw(() => {
+    reputationText.text = `${user.reputation}`;
+  });
+
   function mouseClickedAction(cbLeft, cbRight) {
     if (isMousePressed("left")) {
       cbLeft();
@@ -102,6 +121,18 @@ export default function generateUserStatus(user) {
         () => {
           debug.log("Subtracting MP...");
           user.MP = Math.max(0, user.MP - 100);
+        }
+      );
+    });
+    trophyIcon.onClick(() => {
+      mouseClickedAction(
+        () => {
+          debug.log("Adding reputation...");
+          user.reputation += 10;
+        },
+        () => {
+          debug.log("Subtracting reputation...");
+          user.reputation = Math.max(0, user.reputation - 10);
         }
       );
     });

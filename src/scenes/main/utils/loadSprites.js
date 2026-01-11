@@ -24,4 +24,5 @@ export default function loadSprites() {
       up: { from: 16, to: 19, speed: 8, loop: true },
     },
   });
+  loadSprite("tropyhy", "sprites/trophy.png");
 }
