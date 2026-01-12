@@ -24,5 +24,15 @@ export default function loadSprites() {
       up: { from: 16, to: 19, speed: 8, loop: true },
     },
   });
+  loadSprite("julia", "sprites/julia.png", {
+    sliceX: 4,
+    sliceY: 4,
+    anims: {
+      down: { from: 0, to: 3, speed: 8, loop: true },
+      left: { from: 4, to: 7, speed: 8, loop: true },
+      right: { from: 8, to: 11, speed: 8, loop: true },
+      up: { from: 12, to: 15, speed: 8, loop: true },
+    },
+  });
   loadSprite("tropyhy", "sprites/trophy.png");
 }
