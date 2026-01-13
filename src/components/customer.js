@@ -1,5 +1,6 @@
 export default function customer({ performance, satisfaction, type }) {
   return {
+    id: "customer",
     get customerPerformance() {
       return performance;
     },
