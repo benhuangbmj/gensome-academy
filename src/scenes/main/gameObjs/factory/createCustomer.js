@@ -1,13 +1,10 @@
 import customer from "../../../../components/customer";
-export default function createCustomer(
-  { performance, satisfaction, type, customerSprite, states = ["idle"] },
-  opt
-) {
+export default function createCustomer(opt) {
   const output = add([
-    sprite(customerSprite, { width: opt?.width }),
+    sprite(opt.sprite, { width: opt?.width }),
     pos(opt?.pos),
-    state(states[0], states),
-    customer({ performance, satisfaction, type }),
-    type,
+    state(opt.states[0], opt.states),
+    customer(opt),
+    opt.type,
   ]);
 }

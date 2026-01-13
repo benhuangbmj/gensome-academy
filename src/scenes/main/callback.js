@@ -41,28 +41,28 @@ export default function gensomeAcademy() {
     });
     backNForth(obj, "right");
   });
-  const girl = factory.createCustomer(
-    {
-      performance: 10,
-      satisfaction: 1,
-      type: "student",
-      customerSprite: "girl",
-      states: ["idle", "matching"],
-    },
-    { pos: center(), width: 100 }
-  );
-  const julia = add([
-    sprite("julia", { width: 160 }),
-    pos(100, 100),
-    state("idle", ["idle", "check-in", "teach", "check-out"]),
-    worker({
-      salary: 0,
-      efficiency: 1,
-      rate: 30,
-      type: workerTypes,
-    }),
-    ...workerTypes,
-  ]);
+  const girl = factory.createCustomer({
+    performance: 10,
+    satisfaction: 1,
+    type: "student",
+    sprite: "girl",
+    states: ["idle", "matching"],
+    pos: center(),
+    width: 100,
+  });
+  const julia = factory.createWorker();
+  // add([
+  //   sprite("julia", { width: 160 }),
+  //   pos(100, 100),
+  //   state("idle", ["idle", "check-in", "teach", "check-out"]),
+  //   worker({
+  //     salary: 0,
+  //     efficiency: 1,
+  //     rate: 30,
+  //     type: workerTypes,
+  //   }),
+  //   ...workerTypes,
+  // ]);
   julia.play("down");
   utilsScene.saveGame({ user });
 }
