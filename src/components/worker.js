@@ -1,5 +1,6 @@
 export default function worker({ salary, efficiency, rate, type }) {
   return {
+    id: "worker",
     get workerSalary() {
       return salary;
     },

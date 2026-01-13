@@ -1,7 +1,9 @@
-export default function activity({ duration, effect, actor, target, type }) {
+export default function activity({ effect, actor, target, type }) {
   return {
-    get activityDuration() {
-      return duration;
+    id: "activity",
+    require: ["progress"],
+    destroy() {
+      effect(actor, target);
     },
     get activityEffect() {
       return effect;
@@ -14,9 +16,6 @@ export default function activity({ duration, effect, actor, target, type }) {
     },
     get activityType() {
       return type;
-    },
-    set activityDuration(value) {
-      duration = value;
     },
     set activityEffect(value) {
       effect = value;
