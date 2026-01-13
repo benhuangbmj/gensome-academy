@@ -24,7 +24,9 @@ export default function progress(
       if (finished || duration <= 0) {
         if (_loop) {
           this.resetProgress();
-        } else return;
+        } else {
+          this.destroy();
+        }
       }
       elapsed = Math.min(elapsed + dt(), duration);
       if (elapsed >= duration) {

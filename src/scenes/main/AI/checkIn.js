@@ -16,7 +16,6 @@ export default function checkIn(secretary, student) {
     }),
     progress(duration, {
       width: secretary.width,
-      onProgressFinished: (obj) => obj.destroy(),
     }),
   ]);
 }
