@@ -3,6 +3,7 @@ import utilsScene from "./utils";
 import UI from "./gameObjs/UI";
 import AI from "./AI/AI";
 import worker from "../../components/worker";
+import factory from "./gameObjs/factory/factory";
 const workerTypes = ["secretary", "tutor"];
 const customerTyes = ["student"];
 export default function gensomeAcademy() {
@@ -40,14 +41,18 @@ export default function gensomeAcademy() {
     });
     backNForth(obj, "right");
   });
-  const girl = add([
-    sprite("girl", { width: 100 }),
-    pos(center()),
-    state("idle", ["idle", "matching"]),
-    "student",
-  ]);
+  const girl = factory.createCustomer(
+    {
+      performance: 10,
+      satisfaction: 1,
+      type: "student",
+      customerSprite: "girl",
+      states: ["idle", "matching"],
+    },
+    { pos: center(), width: 100 }
+  );
   const julia = add([
-    sprite("julia", { width: 200 }),
+    sprite("julia", { width: 160 }),
     pos(100, 100),
     state("idle", ["idle", "check-in", "teach", "check-out"]),
     worker({
