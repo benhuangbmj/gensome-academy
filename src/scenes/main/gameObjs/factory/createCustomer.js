@@ -7,4 +7,5 @@ export default function createCustomer(opt) {
     customer(opt),
     opt.type,
   ]);
+  return output;
 }
