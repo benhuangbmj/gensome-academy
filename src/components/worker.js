@@ -1,4 +1,11 @@
-export default function worker({ salary, efficiency, rate, type }) {
+export default function worker({
+  salary,
+  efficiency,
+  rate,
+  type,
+  capacity = 1,
+  usage = 0,
+}) {
   return {
     id: "worker",
     get workerSalary() {
@@ -13,6 +20,12 @@ export default function worker({ salary, efficiency, rate, type }) {
     get workerType() {
       return type;
     },
+    get wokerCapacity() {
+      return capacity;
+    },
+    get wokerUsage() {
+      return usage;
+    },
     set workerSalary(value) {
       salary = value;
     },
@@ -24,6 +37,12 @@ export default function worker({ salary, efficiency, rate, type }) {
     },
     set workerType(value) {
       type = value;
+    },
+    set workerCapacity(value) {
+      capacity = value;
+    },
+    set workerUsage(value) {
+      usage = value;
     },
   };
 }
