@@ -20,10 +20,10 @@ export default function worker({
     get workerType() {
       return type;
     },
-    get wokerCapacity() {
+    get workerCapacity() {
       return capacity;
     },
-    get wokerUsage() {
+    get workerUsage() {
       return usage;
     },
     set workerSalary(value) {

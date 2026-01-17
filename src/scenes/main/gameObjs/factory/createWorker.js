@@ -1,15 +1,6 @@
 import worker from "../../../../components/worker";
+import states from "../../states/states";
 export default function createWorker(opt) {
-  opt = opt ?? {
-    salary: 0,
-    efficiency: 1,
-    rate: 30,
-    type: ["tutor"],
-    states: ["idle", "check-in", "teach", "check-out"],
-    sprite: "julia",
-    pos: vec2(100, 100),
-    width: 160,
-  };
   const output = add([
     sprite(opt.sprite, { width: opt?.width }),
     pos(opt.pos),
@@ -17,5 +8,8 @@ export default function createWorker(opt) {
     worker(opt),
     ...opt.type,
   ]);
+  output.onStateEnter("check-in", states.checkIn);
+  output.onStateEnter("teaching", states.teaching);
+  output.onStateEnter("check-out", states.checkOut);
   return output;
 }
