@@ -35,4 +35,6 @@ export default function loadSprites() {
     },
   });
   loadSprite("tropyhy", "sprites/trophy.png");
+  loadSprite("steel", "sprites/steel.png");
+  loadSprite("floor", "sprites/tilestonebricks.png");
 }

@@ -1,13 +1,17 @@
 import worker from "../../../../components/worker";
 import states from "../../states/states";
-export default function createWorker(opt) {
-  const output = add([
-    sprite(opt.sprite, { width: opt?.width }),
-    pos(opt.pos),
-    state(opt.states[0], opt.states),
-    worker(opt),
-    ...opt.type,
-  ]);
+export default function createWorker(level, opt) {
+  opt.tilePos = opt.tilePos ?? vec2(1, 1);
+  const output = level.spawn(
+    [
+      sprite(opt.sprite, { width: opt?.width }),
+      pos(opt.pos),
+      state(opt.states[0], opt.states),
+      worker(opt),
+      ...opt.type,
+    ],
+    opt.tilePos,
+  );
   output.onStateEnter("check-in", states.checkIn);
   output.onStateEnter("teaching", states.teaching);
   output.onStateEnter("check-out", states.checkOut);

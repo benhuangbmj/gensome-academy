@@ -1,8 +1,10 @@
 import utilsScene from "./utils";
 import userContext from "./contexts/userContext";
+import levelContext from "./contexts/levelContext";
 import UI from "./gameObjs/UI";
 import factory from "./gameObjs/factory/factory";
 import handlers from "./handlers/handlers";
+import makeMainLevel from "./level";
 const workerTypes = ["secretary", "tutor"];
 const customerTyes = ["student"];
 
@@ -12,56 +14,40 @@ export default function gensomeAcademy() {
   utilsScene.trackGameTime(user);
   utilsScene.saveGame({ user });
   utilsScene.loadSprites();
-  for (let generator in UI) {
-    UI[generator](user);
-  }
   onAdd("student", (obj) => {
     handlers.studentAdded(obj);
-    // const addProgress = obj.onUpdate(() => {
-    //   if (obj.width > 0) {
-    //     obj.use(
-    //       progress(30, {
-    //         width: obj.width,
-    //         height: Math.max(obj.width / 10, 10),
-    //         offset: vec2(0, 15).add(vec2(0, obj.height)),
-    //         loop: true,
-    //         onProgressFinished() {
-    //           user.cash++;
-    //           obj.destroy();
-    //         },
-    //       })
-    //     );
-    //     addProgress.cancel();
-    //   }
-    // });
     backNForth(obj, "right");
     wait(70, () => {
       obj.destroy();
     });
   });
-  const julia = factory.createWorker({
+  const mainLevel = makeMainLevel({ TILE_WIDTH: 64, TILE_HEIGHT: 64 });
+  levelContext.create(mainLevel);
+  for (let generator in UI) {
+    UI[generator](user);
+  }
+
+  const julia = factory.createWorker(mainLevel, {
     sprite: "julia",
     width: 160,
     states: ["idle", "check-in", "teaching", "check-out"],
-    pos: vec2(100, 100),
     salary: 0,
     efficiency: 1,
     rate: 30,
     capacity: 1,
     usage: 0,
     type: workerTypes,
+    tilePos: vec2(2, 1),
   });
   julia.play("down");
-
   loop(90, () => {
-    factory.createCustomer({
+    factory.createCustomer(mainLevel, {
       performance: 10,
       satisfaction: 1,
       type: "student",
       sprite: "girl",
       states: ["idle", "matching", "learning", "leaving"],
-      pos: center(),
-      width: 100,
+      width: mainLevel.tileWidth(),
     });
   });
 }
