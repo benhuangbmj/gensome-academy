@@ -5,6 +5,7 @@ import UI from "./gameObjs/UI";
 import factory from "./gameObjs/factory/factory";
 import handlers from "./handlers/handlers";
 import makeMainLevel from "./level";
+import backNForth from "./misc/backNForth";
 const workerTypes = ["secretary", "tutor"];
 const customerTyes = ["student"];
 
@@ -16,7 +17,10 @@ export default function gensomeAcademy() {
   utilsScene.loadSprites();
   onAdd("student", (obj) => {
     handlers.studentAdded(obj);
-    backNForth(obj, "right");
+    const applyMove = obj.onDraw(() => {
+      backNForth(obj, "right");
+      applyMove.cancel();
+    });
     wait(70, () => {
       obj.destroy();
     });
@@ -40,7 +44,7 @@ export default function gensomeAcademy() {
     tilePos: vec2(2, 1),
   });
   julia.play("down");
-  loop(90, () => {
+  loop(20, () => {
     factory.createCustomer(mainLevel, {
       performance: 10,
       satisfaction: 1,
@@ -50,36 +54,4 @@ export default function gensomeAcademy() {
       width: mainLevel.tileWidth(),
     });
   });
-}
-
-function backNForth(obj, direction) {
-  if (direction == "right") {
-    const motion = obj.onUpdate(() => {
-      obj.moveTo(center().add(vec2(200, 0)), 50);
-      if (
-        JSON.stringify(obj.pos) === JSON.stringify(center().add(vec2(200, 0)))
-      ) {
-        motion.cancel();
-        obj.play("down");
-        wait(3, () => {
-          backNForth(obj, "left");
-        });
-      }
-    });
-    obj.play("right");
-  } else if (direction == "left") {
-    const motion = obj.onUpdate(() => {
-      obj.moveTo(center().add(vec2(-200, 0)), 50);
-      if (
-        JSON.stringify(obj.pos) === JSON.stringify(center().add(vec2(-200, 0)))
-      ) {
-        motion.cancel();
-        obj.play("down");
-        wait(3, () => {
-          backNForth(obj, "right");
-        });
-      }
-    });
-    obj.play("left");
-  }
 }
