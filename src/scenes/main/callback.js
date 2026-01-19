@@ -17,6 +17,7 @@ export default function gensomeAcademy() {
     },
     size: vec2(1, 2),
   };
+  let isApproved = true;
   const user = utilsScene.generateUser();
   userContext.create(user);
   utilsScene.trackGameTime(user);
@@ -61,5 +62,10 @@ export default function gensomeAcademy() {
       width: mainLevel.tileWidth(),
     });
   });
-  onMouseMove((eventPos) => handlers.mouseMoved(eventPos, item1));
+  onMouseMove((eventPos) =>
+    handlers.mouseMoved(eventPos, item1, (value) => (isApproved = value)),
+  );
+  onMousePress((eventPos) =>
+    handlers.mousePressedAddItem(eventPos, item1, isApproved),
+  );
 }
