@@ -1,3 +1,4 @@
+import levelUtils from "../../components/levelUtils";
 export default function makeMainLevel({ TILE_WIDTH, TILE_HEIGHT }) {
   const levelMap = [
     "----------------",
@@ -44,5 +45,5 @@ export default function makeMainLevel({ TILE_WIDTH, TILE_HEIGHT }) {
       vec2(5, 5),
     );
   });
-  return add([mainLevelComp, pos(0, 80), "main-level"]);
+  return add([mainLevelComp, pos(0, 80), levelUtils(), "main-level"]);
 }

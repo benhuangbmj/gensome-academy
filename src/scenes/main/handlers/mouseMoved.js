@@ -1,41 +1,42 @@
 import levelContext from "../contexts/levelContext";
 let previousTilePos = null;
-export default function mouseMoved(eventPos, item) {
+export default function mouseMoved(eventPos, item, approve) {
+  approve(true);
   const level = levelContext.provide();
-  const tilePos = level.pos2Tile(eventPos.sub(level.pos));
-  if (JSON.stringify(tilePos) === JSON.stringify(previousTilePos)) {
+  const tile = level.adjustedPos2Tile(eventPos);
+  if (JSON.stringify(tile) === JSON.stringify(previousTilePos)) {
     return;
   }
-  previousTilePos = tilePos;
-  function drawItemSprite(tilePos, item) {
+  previousTilePos = tile;
+  function drawItemSprite(tile, item) {
     drawSprite(
       Object.assign(item.sprite, {
-        pos: level.tile2Pos(tilePos).add(level.pos),
+        pos: level.adjustedTile2Pos(tile),
       }),
     );
   }
 
-  function drawBluePrint(tilePos) {
-    const obstacle = level.getAt(tilePos).find((obj) => obj.isObstacle);
+  function drawBluePrint(tile) {
+    const obstacle = level.getAt(tile).find((obj) => obj.isObstacle);
+    obstacle && approve(false);
     drawRect({
       width: level.tileWidth(),
       height: level.tileHeight(),
-      pos: level.tile2Pos(tilePos).add(level.pos),
+      pos: level.adjustedTile2Pos(tile),
       color: obstacle ? RED : BLUE,
       opacity: 0.3,
     });
   }
   const drawOnTile = onDraw(() => {
-    drawItemSprite(tilePos, item);
+    drawItemSprite(tile, item);
     const [h, w] = Object.values(item.size);
     for (let x = 0; x < w; x++) {
       for (let y = 0; y < h; y++) {
-        drawBluePrint(tilePos.add(vec2(x, y)));
+        drawBluePrint(tile.add(vec2(x, y)));
       }
     }
     if (
-      JSON.stringify(tilePos) !=
-      JSON.stringify(level.pos2Tile(mousePos().sub(level.pos)))
+      JSON.stringify(tile) != JSON.stringify(level.adjustedPos2Tile(mousePos()))
     ) {
       drawOnTile.cancel();
     }
