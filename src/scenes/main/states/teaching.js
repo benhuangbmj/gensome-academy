@@ -2,7 +2,7 @@ import config from "../../../config";
 import activity from "../../../components/activity";
 import progress from "../../../components/progress";
 export default function teaching(tutor, student) {
-  const duration = (5 * config.TIME_FLOW_RATE) / tutor.workerEfficiency;
+  const duration = (60 * config.TIME_FLOW_RATE) / tutor.workerEfficiency;
   tutor.workerUsage++;
   student.add([
     pos(),

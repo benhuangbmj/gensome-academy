@@ -2,7 +2,6 @@ import customer from "../../../../components/customer";
 import states from "../../states/states";
 export default function createCustomer(level, opt) {
   opt.tilePos = opt.tilePos ?? vec2(1, 1);
-  debug.log(opt.tilePos, opt.width);
   const output = level.spawn(
     [
       sprite(opt.sprite, { width: opt?.width }),

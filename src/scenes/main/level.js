@@ -38,8 +38,8 @@ export default function makeMainLevel({ TILE_WIDTH, TILE_HEIGHT }) {
     mainLevelComp.spawn(
       [
         sprite("card-table", { frame: 2, width: TILE_WIDTH * 3.5 }),
-        anchor("center"),
-        pos(TILE_WIDTH / 2, TILE_HEIGHT / 2),
+        area(),
+        tile({ isObstacle: true }),
       ],
       vec2(5, 5),
     );

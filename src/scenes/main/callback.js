@@ -10,6 +10,13 @@ const workerTypes = ["secretary", "tutor"];
 const customerTyes = ["student"];
 
 export default function gensomeAcademy() {
+  let item1 = {
+    sprite: {
+      sprite: "card-table",
+      frame: 2,
+    },
+    size: vec2(1, 2),
+  };
   const user = utilsScene.generateUser();
   userContext.create(user);
   utilsScene.trackGameTime(user);
@@ -33,7 +40,7 @@ export default function gensomeAcademy() {
 
   const julia = factory.createWorker(mainLevel, {
     sprite: "julia",
-    width: 160,
+    width: mainLevel.tileWidth(),
     states: ["idle", "check-in", "teaching", "check-out"],
     salary: 0,
     efficiency: 1,
@@ -44,7 +51,7 @@ export default function gensomeAcademy() {
     tilePos: vec2(2, 1),
   });
   julia.play("down");
-  loop(20, () => {
+  loop(80, () => {
     factory.createCustomer(mainLevel, {
       performance: 10,
       satisfaction: 1,
@@ -54,4 +61,5 @@ export default function gensomeAcademy() {
       width: mainLevel.tileWidth(),
     });
   });
+  onMouseMove((eventPos) => handlers.mouseMoved(eventPos, item1));
 }
