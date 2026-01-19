@@ -3,7 +3,7 @@ function snapToTileCenter({ level, position }) {
   const tileWorldPos = level.tile2Pos(tilePos);
   const output = vec2(
     tileWorldPos.x + 0.5 * level.tileWidth(),
-    tileWorldPos.y + 0.5 * level.tileHeight()
+    tileWorldPos.y + 0.5 * level.tileHeight(),
   );
   return output;
 }
@@ -67,9 +67,18 @@ function playDirectionAnim({
     return direction;
   } else return currDirection;
 }
+function makeBySize(tilePos, size, callback) {
+  const [h, w] = Object.values(size);
+  for (let x = 0; x < w; x++) {
+    for (let y = 0; y < h; y++) {
+      callback(tilePos.add(vec2(x, y)));
+    }
+  }
+}
 export default {
   snapToTileCenter,
   chase,
   adjustPosition,
   playDirectionAnim,
+  makeBySize,
 };

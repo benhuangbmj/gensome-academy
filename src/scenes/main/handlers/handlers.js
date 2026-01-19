@@ -1,8 +1,8 @@
 import studentAdded from "./studentAdded";
-import mouseMoved from "./mouseMoved";
+import mouseMovedAddItem from "./mouseMovedAddItem";
 import mousePressedAddItem from "./mousePressedAddItem";
 export default {
   studentAdded,
-  mouseMoved,
+  mouseMovedAddItem,
   mousePressedAddItem,
 };

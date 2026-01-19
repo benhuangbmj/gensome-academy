@@ -15,6 +15,9 @@ export default function gensomeAcademy() {
       sprite: "card-table",
       frame: 2,
     },
+    tileOpt: {
+      isObstacle: true,
+    },
     size: vec2(1, 2),
   };
   let isApproved = true;
@@ -63,7 +66,11 @@ export default function gensomeAcademy() {
     });
   });
   onMouseMove((eventPos) =>
-    handlers.mouseMoved(eventPos, item1, (value) => (isApproved = value)),
+    handlers.mouseMovedAddItem(
+      eventPos,
+      item1,
+      (value) => (isApproved = value),
+    ),
   );
   onMousePress((eventPos) =>
     handlers.mousePressedAddItem(eventPos, item1, isApproved),
