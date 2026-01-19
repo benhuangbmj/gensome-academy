@@ -41,7 +41,6 @@ export default function gensomeAcademy() {
   for (let generator in UI) {
     UI[generator](user);
   }
-
   const julia = factory.createWorker(mainLevel, {
     sprite: "julia",
     width: mainLevel.tileWidth(),
@@ -75,4 +74,5 @@ export default function gensomeAcademy() {
   onMousePress((eventPos) =>
     handlers.mousePressedAddItem(eventPos, item1, isApproved),
   );
+  mainLevel.spawn([sprite("sparkling", { anim: "anim" })], vec2(10, 10));
 }
