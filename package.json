@@ -9,7 +9,7 @@
 	},
 	"dependencies": {
 		"@kaplayjs/crew": "^2.1.0",
-		"kaplay": "^4000.0.0-alpha.25"
+		"kaplay": "^4000.0.0-alpha.26"
 	},
 	"devDependencies": {
 		"@types/node": "^25.0.3",
