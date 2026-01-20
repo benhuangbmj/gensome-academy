@@ -10,22 +10,13 @@ const workerTypes = ["secretary", "tutor"];
 const customerTyes = ["student"];
 
 export default function gensomeAcademy() {
-  let item1 = {
-    sprite: {
-      sprite: "card-table",
-      frame: 2,
-    },
-    tileOpt: {
-      isObstacle: true,
-    },
-    size: vec2(1, 2),
-  };
-  let isApproved = true;
   const user = utilsScene.generateUser();
   userContext.create(user);
   utilsScene.trackGameTime(user);
   utilsScene.saveGame({ user });
   utilsScene.loadSprites();
+  const screenDim = Math.min(width(), height());
+  const [TILE_WIDTH, TILE_HEIGHT] = [screenDim / 25, screenDim / 25];
   onAdd("student", (obj) => {
     handlers.studentAdded(obj);
     const applyMove = obj.onDraw(() => {
@@ -36,14 +27,14 @@ export default function gensomeAcademy() {
       obj.destroy();
     });
   });
-  const mainLevel = makeMainLevel({ TILE_WIDTH: 64, TILE_HEIGHT: 64 });
+  const mainLevel = makeMainLevel({ TILE_WIDTH, TILE_HEIGHT });
   levelContext.create(mainLevel);
   for (let generator in UI) {
     UI[generator](user);
   }
   const julia = factory.createWorker(mainLevel, {
     sprite: "julia",
-    width: mainLevel.tileWidth(),
+    width: 2 * mainLevel.tileWidth(),
     states: ["idle", "check-in", "teaching", "check-out"],
     salary: 0,
     efficiency: 1,
@@ -51,7 +42,7 @@ export default function gensomeAcademy() {
     capacity: 1,
     usage: 0,
     type: workerTypes,
-    tilePos: vec2(2, 1),
+    tilePos: vec2(5, 5),
   });
   julia.play("down");
   loop(80, () => {
@@ -62,17 +53,11 @@ export default function gensomeAcademy() {
       sprite: "girl",
       states: ["idle", "matching", "learning", "leaving"],
       width: mainLevel.tileWidth(),
+      tilePos: vec2(2, 2),
     });
   });
-  onMouseMove((eventPos) =>
-    handlers.mouseMovedAddItem(
-      eventPos,
-      item1,
-      (value) => (isApproved = value),
-    ),
+  mainLevel.spawn(
+    [sprite("sparkling", { anim: "anim", width: mainLevel.tileWidth() })],
+    vec2(10, 10),
   );
-  onMousePress((eventPos) =>
-    handlers.mousePressedAddItem(eventPos, item1, isApproved),
-  );
-  mainLevel.spawn([sprite("sparkling", { anim: "anim" })], vec2(10, 10));
 }

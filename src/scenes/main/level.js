@@ -19,13 +19,13 @@ export default function makeMainLevel({ TILE_WIDTH, TILE_HEIGHT }) {
     tileHeight: TILE_HEIGHT,
     tiles: {
       "-": () => [
-        sprite("steel"),
+        sprite("steel", { width: TILE_WIDTH }),
         area(),
         body({ isStatic: true }),
         tile({ isObstacle: true }),
       ],
       "|": () => [
-        sprite("steel"),
+        sprite("steel", { width: TILE_WIDTH }),
         area(),
         body({ isStatic: true }),
         tile({ isObstacle: true }),

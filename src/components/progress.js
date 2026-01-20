@@ -2,7 +2,7 @@ export default function progress(
   duration = 5,
   {
     width = 120,
-    height = 12,
+    height = 6,
     fillColor = rgb(0, 255, 100),
     backgroundColor = rgb(160, 160, 160),
     borderColor = rgb(0, 0, 0),
@@ -10,7 +10,7 @@ export default function progress(
     offset = vec2(0, 0),
     loop = false,
     onProgressFinished,
-  } = {}
+  } = {},
 ) {
   let elapsed = 0;
   let finished = false;
