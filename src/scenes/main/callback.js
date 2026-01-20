@@ -1,6 +1,7 @@
 import utilsScene from "./utils";
 import userContext from "./contexts/userContext";
 import levelContext from "./contexts/levelContext";
+import UIContext from "./contexts/UIContext";
 import UI from "./gameObjs/UI";
 import factory from "./gameObjs/factory/factory";
 import handlers from "./handlers/handlers";
@@ -8,7 +9,7 @@ import makeMainLevel from "./level";
 import backNForth from "./misc/backNForth";
 const workerTypes = ["secretary", "tutor"];
 const customerTyes = ["student"];
-
+const GAP = 10;
 export default function gensomeAcademy() {
   const user = utilsScene.generateUser();
   userContext.create(user);
@@ -16,7 +17,13 @@ export default function gensomeAcademy() {
   utilsScene.saveGame({ user });
   utilsScene.loadSprites();
   const screenDim = Math.min(width(), height());
-  const [TILE_WIDTH, TILE_HEIGHT] = [screenDim / 25, screenDim / 25];
+  const TILE_SCALE = 0.06;
+  const [TILE_WIDTH, TILE_HEIGHT] = [
+    screenDim * TILE_SCALE,
+    screenDim * TILE_SCALE,
+  ];
+  const UISpecs = { TILE_WIDTH, TILE_HEIGHT, GAP };
+  UIContext.create(UISpecs);
   onAdd("student", (obj) => {
     handlers.studentAdded(obj);
     const applyMove = obj.onDraw(() => {
@@ -60,4 +67,13 @@ export default function gensomeAcademy() {
     [sprite("sparkling", { anim: "anim", width: mainLevel.tileWidth() })],
     vec2(10, 10),
   );
+
+  onKeyPress((key) => {
+    if (key == "right") {
+      setCamPos(getCamPos().add(vec2(20, 0)));
+    }
+    if (key == "left") {
+      setCamPos(getCamPos().sub(vec2(20, 0)));
+    }
+  });
 }
