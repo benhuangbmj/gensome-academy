@@ -37,4 +37,8 @@ export default function loadSprites() {
   loadSprite("tropyhy", "sprites/trophy.png");
   loadSprite("steel", "sprites/steel.png");
   loadSprite("floor", "sprites/tilestonebricks.png");
+  loadCrew("sprite", "sparkling");
+  loadCrew("sprite", "paper");
+  loadCrew("sprite", "toolbox");
+  loadCrew("sprite", "pencil");
 }
