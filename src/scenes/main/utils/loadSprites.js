@@ -41,4 +41,6 @@ export default function loadSprites() {
   loadCrew("sprite", "paper");
   loadCrew("sprite", "toolbox");
   loadCrew("sprite", "pencil");
+  loadCrew("sprite", "play");
+  loadCrew("sprite", "wizarding");
 }
