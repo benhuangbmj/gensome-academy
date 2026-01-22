@@ -1,4 +1,4 @@
-import UIContext from "../../contexts/UIContext";
+import UIContext from "../../../../contexts/UIContext";
 const btnData = [
   { tag: "hire", sprite: "paper" },
   { tag: "purchase", sprite: "toolbox" },
