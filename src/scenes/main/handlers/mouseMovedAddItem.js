@@ -1,7 +1,7 @@
 import levelContext from "../contexts/levelContext";
 import utils from "../../../utils";
 let previousTilePos = null;
-export default function mouseMovedAddItem(eventPos, item, approve) {
+export default function mouseMovedAddItem(eventPos, approve, item) {
   approve(true);
   const level = levelContext.provide();
   const tilePos = level.adjustedPos2Tile(eventPos);
@@ -9,7 +9,7 @@ export default function mouseMovedAddItem(eventPos, item, approve) {
     return;
   }
   previousTilePos = tilePos;
-  const drawOnTile = onDraw(() => {
+  const drawOnTile = level.onDraw(() => {
     drawItemSprite(level, tilePos, item);
     utils.makeBySize(tilePos, item.size, (tilePos) =>
       drawBluePrint(level, tilePos, approve),
@@ -24,9 +24,14 @@ export default function mouseMovedAddItem(eventPos, item, approve) {
 }
 function drawItemSprite(level, tilePos, item) {
   drawSprite(
-    Object.assign(item.sprite, {
-      pos: level.adjustedTile2Pos(tilePos),
-    }),
+    Object.assign(
+      { sprite: item.sprite },
+      {
+        pos: level.tile2Pos(tilePos),
+        width: level.tileWidth() * item.size.x,
+        height: level.tileHeight() * item.size.y,
+      },
+    ),
   );
 }
 function drawBluePrint(level, tilePos, approve) {
@@ -35,7 +40,7 @@ function drawBluePrint(level, tilePos, approve) {
   drawRect({
     width: level.tileWidth(),
     height: level.tileHeight(),
-    pos: level.adjustedTile2Pos(tilePos),
+    pos: level.tile2Pos(tilePos),
     color: obstacle ? RED : BLUE,
     opacity: 0.3,
   });

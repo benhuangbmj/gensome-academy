@@ -1,5 +1,6 @@
 import levelContext from "../contexts/levelContext";
 import utils from "../../../utils";
+//TODO: fix the argument structure to be consistent with mouseMovedAddItem
 export default function mousePressedAddItem(btn, item, isApproved) {
   const level = levelContext.provide();
   if (!isApproved || btn != "left") return;

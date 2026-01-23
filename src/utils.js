@@ -71,7 +71,7 @@ function makeBySize(tilePos, size, callback) {
   const [h, w] = Object.values(size);
   for (let x = 0; x < w; x++) {
     for (let y = 0; y < h; y++) {
-      callback(tilePos.add(vec2(x, y)));
+      callback(tilePos.add(vec2(y, x)));
     }
   }
 }
