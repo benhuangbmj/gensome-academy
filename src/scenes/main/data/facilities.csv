@@ -1,0 +1,2 @@
+id,cash_cost,FP_cost,MP_cost,description,deteoriate_rate,condition,broken,sprite,name
+1,500,5,0.01,,0.01,100,FALSE,card-table,Card Table
