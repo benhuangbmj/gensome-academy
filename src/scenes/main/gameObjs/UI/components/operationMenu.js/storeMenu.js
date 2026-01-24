@@ -1,12 +1,45 @@
 import UIContext from "../../../../contexts/UIContext";
+import dataContext from "../../../../contexts/dataContext";
+const itemData = dataContext.provide();
 export default function storeMenu(btnTag) {
+  let page = 1;
   const UISpecs = UIContext.provide();
   const menuContainer = generateMenuContainer(UISpecs);
   generateGrids(menuContainer, UISpecs);
-  generateMenuIcons(menuContainer, btnTag, UISpecs);
+  generatePageControls(menuContainer, UISpecs);
+  generateCatalog(menuContainer, btnTag, page, UISpecs);
   return menuContainer;
 }
 
+function generateCatalog(menuContainer, btnTag, page, UISpecs) {
+  if (btnTag in itemData) {
+    const catalogData = itemData[btnTag];
+    let start = (UISpecs.MENU_ROWS - 1) * (UISpecs.MENU_COLS - 2) * (page - 1);
+    for (
+      let i = start;
+      i < (UISpecs.MENU_ROWS - 1) * (UISpecs.MENU_COLS - 2) * page &&
+      i < catalogData.length - 1;
+      i++
+    ) {
+      menuContainer.add([
+        rect(UISpecs.BTN_WIDTH, UISpecs.BTN_HEIGHT),
+        pos(calcIconPos(i)),
+        area(),
+      ]);
+    }
+  }
+
+  function calcIconPos(i) {
+    const row = Math.floor(i / (UISpecs.MENU_COLS - 2));
+    const col = i % (UISpecs.MENU_COLS - 2);
+    return vec2(
+      -UISpecs.MENU_WIDTH + UISpecs.BTN_WIDTH + col * UISpecs.BTN_WIDTH,
+      //(UISpecs.BTN_WIDTH - UISpecs.TILE_WIDTH) / 2,
+      -UISpecs.MENU_HEIGHT + row * UISpecs.BTN_HEIGHT,
+      //(UISpecs.BTN_HEIGHT - UISpecs.TILE_HEIGHT) / 2,
+    );
+  }
+}
 function generateMenuContainer(UISpecs) {
   return add([
     rect(UISpecs.MENU_WIDTH, UISpecs.MENU_HEIGHT),
@@ -16,7 +49,7 @@ function generateMenuContainer(UISpecs) {
     outline(UISpecs.OUTLINE_WIDTH),
   ]);
 }
-function generateMenuIcons(menuContainer, btntag, UISpecs) {
+function generatePageControls(menuContainer, UISpecs) {
   menuContainer.add([
     sprite("play", { width: UISpecs.TILE_WIDTH }),
     pos(
