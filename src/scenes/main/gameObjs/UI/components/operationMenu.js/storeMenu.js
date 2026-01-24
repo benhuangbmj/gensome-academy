@@ -16,7 +16,7 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
   if (btnTag in itemData) {
     const catalogData = itemData[btnTag];
     let start = (UISpecs.MENU_ROWS - 1) * (UISpecs.MENU_COLS - 2) * (page - 1);
-    let mouseMovedEvent;
+    let mouseMovedEvent, mousePressedEvent;
     for (
       let i = start;
       i < (UISpecs.MENU_ROWS - 1) * (UISpecs.MENU_COLS - 2) * page &&
@@ -46,16 +46,22 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
         if (mouseMovedEvent) {
           mouseMovedEvent.cancel();
         }
-        let approved = true;
+        if (mousePressedEvent) {
+          mousePressedEvent.cancel();
+        }
+        let isApproved = true;
         mouseMovedEvent = itemBtn.onMouseMove((eventPos) =>
           handlers.mouseMovedAddItem(
             eventPos,
             (value) => {
-              approved = value;
+              isApproved = value;
             },
             item,
           ),
         );
+        mousePressedEvent = itemBtn.onMousePress((btn) => {
+          handlers.mousePressedAddItem(btn, item, isApproved);
+        });
       });
     }
   }
