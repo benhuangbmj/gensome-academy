@@ -20,14 +20,5 @@ export default function mousePressedAddItem(btn, item, isApproved) {
   );
 }
 function spawnBluePrint(level, tilePos, item) {
-  level.spawn(
-    [
-      tile(
-        tile({
-          isObstacle: true,
-        }),
-      ),
-    ],
-    tilePos,
-  );
+  level.spawn([tile({ isObstacle: true })], tilePos);
 }

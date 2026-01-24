@@ -3,7 +3,7 @@ import utils from "../../../utils";
 let previousTilePos = null;
 export default function mouseMovedAddItem(eventPos, approve, item) {
   item.size = vec2(item.size_w, item.size_h);
-  approve(true);
+  approve(false);
   const level = levelContext.provide();
   const tilePos = level.adjustedPos2Tile(eventPos);
   if (JSON.stringify(tilePos) === JSON.stringify(previousTilePos)) {
@@ -36,13 +36,16 @@ function drawItemSprite(level, tilePos, item) {
   );
 }
 function drawBluePrint(level, tilePos, approve) {
-  const obstacle = level.getAt(tilePos).find((obj) => obj.isObstacle);
-  obstacle && approve(false);
+  const objsAtTilePos = level.getAt(tilePos);
+  const isApproved =
+    objsAtTilePos.length > 0 &&
+    !objsAtTilePos.find((obj) => obj.isObstacle || !obj.isAvailable);
+  approve(isApproved);
   drawRect({
     width: level.tileWidth(),
     height: level.tileHeight(),
     pos: level.tile2Pos(tilePos),
-    color: obstacle ? RED : BLUE,
+    color: isApproved ? BLUE : RED,
     opacity: 0.3,
   });
 }
