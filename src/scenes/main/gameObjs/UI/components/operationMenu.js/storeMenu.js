@@ -1,5 +1,6 @@
 import UIContext from "../../../../contexts/UIContext";
 import dataContext from "../../../../contexts/dataContext";
+import handlers from "../../../../handlers/handlers";
 const itemData = dataContext.provide();
 export default function storeMenu(btnTag) {
   let page = 1;
@@ -15,17 +16,47 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
   if (btnTag in itemData) {
     const catalogData = itemData[btnTag];
     let start = (UISpecs.MENU_ROWS - 1) * (UISpecs.MENU_COLS - 2) * (page - 1);
+    let mouseMovedEvent;
     for (
       let i = start;
       i < (UISpecs.MENU_ROWS - 1) * (UISpecs.MENU_COLS - 2) * page &&
       i < catalogData.length - 1;
       i++
     ) {
-      menuContainer.add([
-        rect(UISpecs.BTN_WIDTH, UISpecs.BTN_HEIGHT),
+      const item = catalogData[i];
+      const itemBtn = menuContainer.add([
+        rect(
+          UISpecs.BTN_WIDTH - UISpecs.GRID_LINE_WIDTH,
+          UISpecs.BTN_HEIGHT - UISpecs.GRID_LINE_WIDTH,
+        ),
         pos(calcIconPos(i)),
         area(),
       ]);
+      itemBtn.onDraw(() => {
+        drawSprite({
+          sprite: item.sprite,
+          width: UISpecs.TILE_WIDTH,
+          pos: vec2(
+            (UISpecs.BTN_WIDTH - UISpecs.TILE_WIDTH) / 2,
+            (UISpecs.BTN_HEIGHT - UISpecs.TILE_HEIGHT) / 2,
+          ),
+        });
+      });
+      itemBtn.onClick(() => {
+        if (mouseMovedEvent) {
+          mouseMovedEvent.cancel();
+        }
+        let approved = true;
+        mouseMovedEvent = itemBtn.onMouseMove((eventPos) =>
+          handlers.mouseMovedAddItem(
+            eventPos,
+            (value) => {
+              approved = value;
+            },
+            item,
+          ),
+        );
+      });
     }
   }
 
@@ -33,10 +64,11 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
     const row = Math.floor(i / (UISpecs.MENU_COLS - 2));
     const col = i % (UISpecs.MENU_COLS - 2);
     return vec2(
-      -UISpecs.MENU_WIDTH + UISpecs.BTN_WIDTH + col * UISpecs.BTN_WIDTH,
-      //(UISpecs.BTN_WIDTH - UISpecs.TILE_WIDTH) / 2,
-      -UISpecs.MENU_HEIGHT + row * UISpecs.BTN_HEIGHT,
-      //(UISpecs.BTN_HEIGHT - UISpecs.TILE_HEIGHT) / 2,
+      -UISpecs.MENU_WIDTH +
+        UISpecs.BTN_WIDTH +
+        col * UISpecs.BTN_WIDTH +
+        (1 / 2) * UISpecs.GRID_LINE_WIDTH,
+      -UISpecs.MENU_HEIGHT + row * UISpecs.BTN_HEIGHT + UISpecs.GRID_LINE_WIDTH,
     );
   }
 }
@@ -75,12 +107,11 @@ function generatePageControls(menuContainer, UISpecs) {
   ]);
 }
 function generateGrids(menuContainer, UISpecs) {
-  const GRID_LINE_WIDTH = 2;
   menuContainer.onDraw(() => {
     drawLine({
       p1: vec2(0, -UISpecs.BTN_HEIGHT),
       p2: vec2(-UISpecs.MENU_WIDTH, -UISpecs.BTN_HEIGHT),
-      width: GRID_LINE_WIDTH,
+      width: UISpecs.GRID_LINE_WIDTH,
       color: BLACK,
       fixed: true,
     });
@@ -91,7 +122,7 @@ function generateGrids(menuContainer, UISpecs) {
           -i * UISpecs.BTN_WIDTH,
           -UISpecs.MENU_ROWS * UISpecs.BTN_HEIGHT,
         ),
-        width: GRID_LINE_WIDTH,
+        width: UISpecs.GRID_LINE_WIDTH,
         color: BLACK,
         fixed: true,
       });
@@ -102,7 +133,7 @@ function generateGrids(menuContainer, UISpecs) {
         -(UISpecs.MENU_COLS - 1) * UISpecs.BTN_WIDTH,
         -2 * UISpecs.BTN_HEIGHT + 1,
       ),
-      width: GRID_LINE_WIDTH,
+      width: UISpecs.GRID_LINE_WIDTH,
       color: BLACK,
       fixed: true,
     });

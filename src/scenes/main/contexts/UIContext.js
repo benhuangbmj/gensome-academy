@@ -15,6 +15,7 @@ function create(context) {
     width() - context.BTN_WIDTH - GAP - context.OUTLINE_WIDTH,
     height() - GAP,
   ];
+  context.GRID_LINE_WIDTH = 2;
   UISpecs = context;
 }
 function provide() {
