@@ -68,12 +68,18 @@ export default function gensomeAcademy() {
     vec2(10, 10),
   );
 
-  onKeyPress((key) => {
+  onKeyDown((key) => {
     if (key == "right") {
-      setCamPos(getCamPos().add(vec2(20, 0)));
+      setCamPos(getCamPos().add(vec2(10, 0)));
     }
     if (key == "left") {
-      setCamPos(getCamPos().sub(vec2(20, 0)));
+      setCamPos(getCamPos().sub(vec2(10, 0)));
+    }
+    if (key == "up") {
+      setCamPos(getCamPos().sub(vec2(0, 10)));
+    }
+    if (key == "down") {
+      setCamPos(getCamPos().add(vec2(0, 10)));
     }
   });
 }
