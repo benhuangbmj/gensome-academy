@@ -2,6 +2,7 @@ import UIContext from "../../../../contexts/UIContext";
 import dataContext from "../../../../contexts/dataContext";
 import handlers from "../../../../handlers/handlers";
 const itemData = dataContext.provide();
+let mouseMovedEvent, mousePressedEvent;
 export default function storeMenu(btnTag) {
   let page = 1;
   const UISpecs = UIContext.provide();
@@ -9,6 +10,16 @@ export default function storeMenu(btnTag) {
   generateGrids(menuContainer, UISpecs);
   generatePageControls(menuContainer, UISpecs);
   generateCatalog(menuContainer, btnTag, page, UISpecs);
+  menuContainer.onHover(() => {
+    if (mousePressedEvent) {
+      mousePressedEvent.paused = true;
+    }
+  });
+  menuContainer.onHoverEnd(() => {
+    if (mousePressedEvent) {
+      mousePressedEvent.paused = false;
+    }
+  });
   return menuContainer;
 }
 
@@ -16,7 +27,6 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
   if (btnTag in itemData) {
     const catalogData = itemData[btnTag];
     let start = (UISpecs.MENU_ROWS - 1) * (UISpecs.MENU_COLS - 2) * (page - 1);
-    let mouseMovedEvent, mousePressedEvent;
     for (
       let i = start;
       i < (UISpecs.MENU_ROWS - 1) * (UISpecs.MENU_COLS - 2) * page &&
@@ -31,6 +41,7 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
         ),
         pos(calcIconPos(i)),
         area(),
+        fixed(),
       ]);
       itemBtn.onDraw(() => {
         drawSprite({
@@ -49,8 +60,8 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
         if (mousePressedEvent) {
           mousePressedEvent.cancel();
         }
-        let isApproved = true;
-        mouseMovedEvent = itemBtn.onMouseMove((eventPos) =>
+        let isApproved = false;
+        mouseMovedEvent = onMouseMove((eventPos) =>
           handlers.mouseMovedAddItem(
             eventPos,
             (value) => {
@@ -59,7 +70,7 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
             item,
           ),
         );
-        mousePressedEvent = itemBtn.onMousePress((btn) => {
+        mousePressedEvent = onMousePress((btn) => {
           handlers.mousePressedAddItem(btn, item, isApproved);
         });
       });
@@ -82,6 +93,7 @@ function generateMenuContainer(UISpecs) {
   return add([
     rect(UISpecs.MENU_WIDTH, UISpecs.MENU_HEIGHT),
     pos(UISpecs.MENU_POS_X, UISpecs.MENU_POS_Y),
+    area(),
     fixed(),
     anchor("botright"),
     outline(UISpecs.OUTLINE_WIDTH),
