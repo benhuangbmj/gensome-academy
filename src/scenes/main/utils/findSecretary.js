@@ -1,5 +1,11 @@
 import levelContext from "../contexts/levelContext";
-export default function findSecretary(nextState, args = []) {
+export default function findSecretary(
+  nextState,
+  args = [],
+  callback = (next) => {
+    next();
+  },
+) {
   const level = levelContext.provide();
   const findSecretaryLoop = loop(1, () => {
     const availableSecretaries = level
@@ -8,7 +14,9 @@ export default function findSecretary(nextState, args = []) {
     if (availableSecretaries.length > 0) {
       findSecretaryLoop.cancel();
       const secretary = availableSecretaries[0];
-      secretary.enterState(nextState, secretary, ...args);
+      callback(() => {
+        secretary.enterState(nextState, secretary, ...args);
+      }, secretary);
     }
   });
 }
