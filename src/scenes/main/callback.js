@@ -6,7 +6,6 @@ import UI from "./gameObjs/UI";
 import factory from "./gameObjs/factory/factory";
 import handlers from "./handlers/handlers";
 import makeMainLevel from "./level";
-import backNForth from "./misc/backNForth";
 const workerTypes = ["secretary", "tutor"];
 const customerTyes = ["student"];
 const GAP = 10;
@@ -24,17 +23,17 @@ export default function gensomeAcademy() {
   ];
   const UISpecs = { TILE_WIDTH, TILE_HEIGHT, GAP };
   UIContext.create(UISpecs);
+  const mainLevel = makeMainLevel({ TILE_WIDTH, TILE_HEIGHT });
   onAdd("student", (obj) => {
-    handlers.studentAdded(obj);
-    const applyMove = obj.onDraw(() => {
-      backNForth(obj, "right");
-      applyMove.cancel();
+    const onTargetReachedEvent = obj.onTargetReached(() => {
+      handlers.studentAdded(obj);
+      onTargetReachedEvent.cancel();
     });
-    wait(70, () => {
-      obj.destroy();
+    const setTargetEvent = obj.onUpdate(() => {
+      obj.setTarget(mainLevel.get("wait")[0].pos);
+      setTargetEvent.cancel();
     });
   });
-  const mainLevel = makeMainLevel({ TILE_WIDTH, TILE_HEIGHT });
   levelContext.create(mainLevel);
   for (let generator in UI) {
     UI[generator](user);
@@ -54,20 +53,17 @@ export default function gensomeAcademy() {
   julia.play("anim");
   loop(80, () => {
     factory.createCustomer(mainLevel, {
-      performance: 10,
+      spriteCompOpt: {
+        height: mainLevel.tileHeight(),
+      },
+      performance: 0,
       satisfaction: 1,
       type: "student",
-      sprite: "girl",
+      sprite: "onion",
       states: ["idle", "matching", "learning", "leaving"],
-      width: mainLevel.tileWidth(),
-      tilePos: vec2(2, 2),
+      tilePos: mainLevel.get("exit")[0].tilePos,
     });
   });
-  mainLevel.spawn(
-    [sprite("sparkling", { anim: "anim", width: mainLevel.tileWidth() })],
-    vec2(10, 10),
-  );
-
   onKeyDown((key) => {
     if (key == "right") {
       setCamPos(getCamPos().add(vec2(10, 0)));
