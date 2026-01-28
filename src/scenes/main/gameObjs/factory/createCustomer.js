@@ -4,9 +4,10 @@ export default function createCustomer(level, opt) {
   opt.tilePos = opt.tilePos ?? vec2(1, 1);
   const output = level.spawn(
     [
-      sprite(opt.sprite, { width: opt?.width }),
+      sprite(opt.sprite, opt.spriteCompOpt),
       pos(opt?.pos),
       state(opt.states[0], opt.states),
+      agent({ speed: 2 * level.tileWidth() }),
       customer(opt),
       opt.type,
     ],
