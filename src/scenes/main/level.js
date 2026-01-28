@@ -5,9 +5,9 @@ export default function makeMainLevel({ TILE_WIDTH, TILE_HEIGHT }) {
     "--------------",
     "|************|",
     "|************|",
+    "|********W***|",
     "|************|",
-    "|************|",
-    "|*************",
+    "|************E",
     "|************|",
     "|************|",
     "|************|",
@@ -39,7 +39,25 @@ export default function makeMainLevel({ TILE_WIDTH, TILE_HEIGHT }) {
       ],
       "*": () => [sprite("floor", { width: TILE_WIDTH }), z(-1), available()],
       " ": () => [available(false)],
+      E: () => [
+        sprite("floor", { width: TILE_WIDTH }),
+        z(-1),
+        available(false),
+        "exit",
+      ],
+      W: () => [
+        sprite("floor", { width: TILE_WIDTH }),
+        z(-1),
+        available(false),
+        "wait",
+      ],
     },
+  });
+  onAdd("main-level", (obj) => {
+    obj.spawn(
+      [sprite("sparkling", { anim: "anim", height: obj.tileHeight() })],
+      obj.get("wait")[0].tilePos,
+    );
   });
   return add([mainLevelComp, pos(0, 80), levelUtils(), "main-level"]);
 }
