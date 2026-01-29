@@ -1,6 +1,7 @@
 import kaplay from "kaplay";
 import sceneMain from "./scenes/main/callback";
 import { crew } from "@kaplayjs/crew";
+import userContext from "./scenes/main/contexts/userContext";
 
 window.environment = import.meta.env.VITE_ENVIRONMENT ?? "production";
 
@@ -10,6 +11,8 @@ const k = kaplay({
   debugKey: "f2",
   plugins: [crew],
 });
+
+userContext.useKaplay(k);
 
 k.loadRoot("./"); // A good idea for Itch.io publishing later
 

@@ -10,8 +10,8 @@ const workerTypes = ["secretary", "tutor"];
 const customerTyes = ["student"];
 const GAP = 10;
 export default function gensomeAcademy() {
-  const user = utilsScene.generateUser();
-  userContext.create(user);
+  userContext.create();
+  const user = userContext.provide();
   utilsScene.trackGameTime(user);
   utilsScene.saveGame({ user });
   utilsScene.loadSprites();
