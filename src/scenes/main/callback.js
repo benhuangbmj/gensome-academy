@@ -56,9 +56,6 @@ export default function gensomeAcademy() {
       spriteCompOpt: {
         height: mainLevel.tileHeight(),
       },
-      performance: 0,
-      satisfaction: 1,
-      type: "student",
       sprite: "onion",
       states: ["idle", "matching", "learning", "leaving"],
       tilePos: mainLevel.get("exit")[0].tilePos,

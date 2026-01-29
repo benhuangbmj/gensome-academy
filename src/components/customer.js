@@ -1,6 +1,15 @@
-export default function customer({ performance, satisfaction, type }) {
+export default function customer({
+  performance = 0,
+  satisfaction = 50,
+  attendance = 0,
+  type = "student",
+}) {
+  let _attendance = attendance;
   return {
     id: "customer",
+    get customerAttendance() {
+      return _attendance;
+    },
     get customerPerformance() {
       return performance;
     },
@@ -10,6 +19,9 @@ export default function customer({ performance, satisfaction, type }) {
     get customerType() {
       return type;
     },
+    set customerAttendance(value) {
+      _attendance = value;
+    },
     set customerPerformance(value) {
       performance = value;
     },
@@ -18,6 +30,9 @@ export default function customer({ performance, satisfaction, type }) {
     },
     set customerType(value) {
       type = value;
+    },
+    addAttendance() {
+      _attendance++;
     },
   };
 }
