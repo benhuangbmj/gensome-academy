@@ -7,5 +7,5 @@ export default function studentAdded(obj) {
     });
     obj.setTarget(secretary.pos);
   };
-  findSecretary("check-in", [obj], moveToSec);
+  findSecretary("check-in", [obj], moveToSec, { isNew: true });
 }

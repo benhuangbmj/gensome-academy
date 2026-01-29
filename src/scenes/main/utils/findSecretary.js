@@ -5,6 +5,7 @@ export default function findSecretary(
   callback = (next) => {
     next();
   },
+  opt,
 ) {
   const level = levelContext.provide();
   const findSecretaryLoop = loop(1, () => {
@@ -15,7 +16,7 @@ export default function findSecretary(
       findSecretaryLoop.cancel();
       const secretary = availableSecretaries[0];
       callback(() => {
-        secretary.enterState(nextState, secretary, ...args);
+        secretary.enterState(nextState, secretary, ...args, opt);
       }, secretary);
     }
   });

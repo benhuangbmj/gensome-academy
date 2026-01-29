@@ -1,7 +1,7 @@
 import config from "../../../config";
 import activity from "../../../components/activity";
 import progress from "../../../components/progress";
-export default function checkIn(secretary, student) {
+export default function checkIn(secretary, student, opt) {
   const duration = (5 * config.TIME_FLOW_RATE) / secretary.workerEfficiency;
   secretary.add([
     pos(),
@@ -10,7 +10,7 @@ export default function checkIn(secretary, student) {
       target: student,
       type: "check-in",
       effect: (actor, target) => {
-        target.enterState("matching", student);
+        opt?.isNew && target.enterState("matching", student);
         actor.enterState("idle");
       },
     }),
