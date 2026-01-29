@@ -10,8 +10,8 @@ export default function checkIn(secretary, student, opt) {
       target: student,
       type: "check-in",
       effect: (actor, target) => {
-        opt?.isNew && target.enterState("matching", student);
         actor.enterState("idle");
+        opt?.isNew && target.enterState("matching", student);
       },
     }),
     progress(duration, {
