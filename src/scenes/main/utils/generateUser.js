@@ -5,6 +5,7 @@ const defaultValue = {
   skills: {},
   gameTime: 0,
   reputation: 0,
+  roster: [],
 };
 export default function generateUser(k) {
   const userData = k.getData("user-data", JSON.stringify(defaultValue));

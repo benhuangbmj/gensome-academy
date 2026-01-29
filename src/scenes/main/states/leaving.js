@@ -1,11 +1,5 @@
 import findSecretary from "../utils/findSecretary";
+import moveToSec from "../utils/moveToSec";
 export default function leaving(tutor, student) {
-  const moveToSec = (next, secretary) => {
-    const targetReachedEvent = student.onTargetReached(() => {
-      targetReachedEvent.cancel();
-      next();
-    });
-    student.setTarget(secretary.pos);
-  };
-  findSecretary("check-out", [tutor, student], moveToSec);
+  findSecretary("check-out", [tutor, student], moveToSec(student));
 }

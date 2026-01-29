@@ -1,11 +1,5 @@
 import findSecretary from "../utils/findSecretary";
+import moveToSec from "../utils/moveToSec";
 export default function studentAdded(obj) {
-  const moveToSec = (next, secretary) => {
-    const targetReachedEvent = obj.onTargetReached(() => {
-      targetReachedEvent.cancel();
-      next();
-    });
-    obj.setTarget(secretary.pos);
-  };
-  findSecretary("check-in", [obj], moveToSec, { isNew: true });
+  findSecretary("check-in", [obj], moveToSec(obj), { isNew: true });
 }

@@ -41,7 +41,7 @@ export default function gensomeAcademy() {
   const julia = factory.createWorker(mainLevel, {
     sprite: "wizarding",
     width: mainLevel.tileWidth(),
-    states: ["idle", "check-in", "teaching", "check-out"],
+    states: ["idle", "check-in", "teaching", "check-out", "reserved"],
     salary: 0,
     efficiency: 1,
     rate: 30,
@@ -51,7 +51,7 @@ export default function gensomeAcademy() {
     tilePos: vec2(5, 5),
   });
   julia.play("anim");
-  loop(80, () => {
+  loop(5, () => {
     factory.createCustomer(mainLevel, {
       spriteCompOpt: {
         height: mainLevel.tileHeight(),
