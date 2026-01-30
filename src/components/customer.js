@@ -4,11 +4,10 @@ export default function customer({
   attendance = 0,
   type = "student",
 }) {
-  let _attendance = attendance;
   return {
     id: "customer",
     get customerAttendance() {
-      return _attendance;
+      return attendance;
     },
     get customerPerformance() {
       return performance;
@@ -20,7 +19,7 @@ export default function customer({
       return type;
     },
     set customerAttendance(value) {
-      _attendance = value;
+      attendance = value;
     },
     set customerPerformance(value) {
       performance = value;
@@ -32,7 +31,15 @@ export default function customer({
       type = value;
     },
     addAttendance() {
-      _attendance++;
+      attendance++;
+    },
+    getCustomerStats() {
+      return {
+        performance,
+        satisfaction,
+        attendance,
+        type,
+      };
     },
   };
 }

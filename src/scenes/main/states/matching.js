@@ -1,5 +1,5 @@
 import levelContext from "../contexts/levelContext";
-import enrollStudent from "../utils/enrollStudent";
+import enrollStudent from "../utils/enroll";
 export default function matching(student) {
   const level = levelContext.provide();
   const availableTutors = level.get("tutor").filter((tutor) => {

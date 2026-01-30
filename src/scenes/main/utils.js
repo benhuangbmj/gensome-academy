@@ -4,6 +4,7 @@ import loadSprites from "./utils/loadSprites";
 import trackGameTime from "./utils/trackGameTime";
 import findSecretary from "./utils/findSecretary";
 import moveToSec from "./utils/moveToSec";
+import enroll from "./utils/enroll";
 export default {
   generateUser,
   saveGame,
@@ -11,4 +12,5 @@ export default {
   trackGameTime,
   findSecretary,
   moveToSec,
+  enroll,
 };

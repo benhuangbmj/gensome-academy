@@ -53,11 +53,6 @@ export default function gensomeAcademy() {
   julia.play("anim");
   loop(5, () => {
     factory.createCustomer(mainLevel, {
-      spriteCompOpt: {
-        height: mainLevel.tileHeight(),
-      },
-      sprite: "onion",
-      states: ["idle", "matching", "learning", "leaving"],
       tilePos: mainLevel.get("exit")[0].tilePos,
     });
   });
