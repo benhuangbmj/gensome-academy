@@ -20,4 +20,5 @@ export default function findSecretary(
       }, secretary);
     }
   });
+  return findSecretaryLoop;
 }

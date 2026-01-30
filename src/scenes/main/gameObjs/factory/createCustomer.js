@@ -5,7 +5,14 @@ export default function createCustomer(level, opt) {
   opt.customer = opt.customer ?? {};
   opt.customer.type = opt.customer.type ?? "student";
   opt.sprite = opt.sprite ?? "onion";
-  opt.states = opt.states ?? ["idle", "matching", "learning", "leaving"];
+  opt.states = opt.states ?? [
+    "idle",
+    "matching",
+    "learning",
+    "leaving",
+    "reserved",
+    "dismissed",
+  ];
   opt.spriteCompOpt = opt.spriteCompOpt ?? {};
   opt.spriteCompOpt.height = opt.spriteCompOpt.height ?? level.tileHeight();
   const output = level.spawn(
@@ -21,5 +28,6 @@ export default function createCustomer(level, opt) {
   );
   output.onStateEnter("matching", states.matching);
   output.onStateEnter("leaving", states.leaving);
+  output.onStateEnter("dismissed", states.customer.dismissed);
   return output;
 }

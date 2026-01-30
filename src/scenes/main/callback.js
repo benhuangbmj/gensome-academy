@@ -51,7 +51,7 @@ export default function gensomeAcademy() {
     tilePos: vec2(5, 5),
   });
   julia.play("anim");
-  loop(5, () => {
+  loop(20, () => {
     factory.createCustomer(mainLevel, {
       tilePos: mainLevel.get("exit")[0].tilePos,
     });
