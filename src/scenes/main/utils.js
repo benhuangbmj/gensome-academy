@@ -5,6 +5,7 @@ import trackGameTime from "./utils/trackGameTime";
 import findSecretary from "./utils/findSecretary";
 import moveToSec from "./utils/moveToSec";
 import enroll from "./utils/enroll";
+import isEnrollmentFull from "./utils/isEnrollmentFull";
 export default {
   generateUser,
   saveGame,
@@ -13,4 +14,5 @@ export default {
   findSecretary,
   moveToSec,
   enroll,
+  isEnrollmentFull,
 };

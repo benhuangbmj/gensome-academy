@@ -1,16 +1,10 @@
 import userContext from "../contexts/userContext";
 import config from "../../../config";
+import isEnrollmentFull from "./isEnrollmentFull";
 export default function enroll(student) {
   const user = userContext.provide();
-  if (
-    user.roster.length <
-    config.ROSTER_BASELINE + Math.floor(user.reputation / 100)
-  ) {
-    user.roster.push(encode(student));
-    console.log(user.roster);
-  } else {
-    debug.log(user.roster.length);
-  }
+  if (isEnrollmentFull()) return;
+  user.roster.push(encode(student));
 }
 
 function encode(student) {
