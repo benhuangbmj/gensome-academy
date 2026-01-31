@@ -3,7 +3,6 @@ import config from "../../../config";
 export default function isEnrollmentFull() {
   const user = userContext.provide();
   return (
-    user.roster.length >=
-    config.ROSTER_BASELINE + Math.floor(user.reputation / 100)
+    user.enrolled >= config.ROSTER_BASELINE + Math.floor(user.reputation / 100)
   );
 }
