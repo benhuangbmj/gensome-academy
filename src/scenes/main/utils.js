@@ -6,6 +6,7 @@ import findSecretary from "./utils/findSecretary";
 import moveToSec from "./utils/moveToSec";
 import enroll from "./utils/enroll";
 import isEnrollmentFull from "./utils/isEnrollmentFull";
+import scheduleNext from "./utils/scheduleNext";
 export default {
   generateUser,
   saveGame,
@@ -15,4 +16,5 @@ export default {
   moveToSec,
   enroll,
   isEnrollmentFull,
+  scheduleNext,
 };

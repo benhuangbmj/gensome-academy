@@ -1,8 +1,9 @@
 import config from "../../../config";
 import activity from "../../../components/activity";
 import progress from "../../../components/progress";
+import scheduleNext from "../utils/scheduleNext";
 export default function teaching(tutor, student) {
-  const duration = (60 * config.TIME_FLOW_RATE) / tutor.workerEfficiency;
+  const duration = (5 * config.TIME_FLOW_RATE) / tutor.workerEfficiency;
   tutor.workerUsage++;
   student.add([
     pos(),
@@ -16,6 +17,7 @@ export default function teaching(tutor, student) {
           actor.enterState("idle");
         }
         target.enterState("leaving", tutor, student);
+        scheduleNext();
       },
     }),
     progress(duration, {

@@ -51,11 +51,10 @@ export default function gensomeAcademy() {
     tilePos: vec2(5, 5),
   });
   julia.play("anim");
-  loop(20, () => {
-    factory.createCustomer(mainLevel, {
-      tilePos: mainLevel.get("exit")[0].tilePos,
-    });
+  loop(5, () => {
+    factory.createCustomer(mainLevel);
   });
+  utilsScene.scheduleNext();
   onKeyDown((key) => {
     if (key == "right") {
       setCamPos(getCamPos().add(vec2(10, 0)));
