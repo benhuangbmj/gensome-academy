@@ -1,5 +1,5 @@
 import levelContext from "../contexts/levelContext";
-import enrollStudent from "../utils/enroll";
+import enroll from "../utils/enroll";
 import isEnrollmentFull from "../utils/isEnrollmentFull";
 export default function matching(student) {
   if (!isEnrollmentFull()) {
@@ -16,7 +16,7 @@ export default function matching(student) {
       student.enterState("learning", tutor, student);
       return;
     } else {
-      enrollStudent(student);
+      enroll(student);
     }
   }
   student.enterState("leaving", null, student);

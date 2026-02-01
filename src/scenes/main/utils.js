@@ -7,6 +7,7 @@ import moveToSec from "./utils/moveToSec";
 import enroll from "./utils/enroll";
 import isEnrollmentFull from "./utils/isEnrollmentFull";
 import scheduleNext from "./utils/scheduleNext";
+import encode from "./utils/encode";
 export default {
   generateUser,
   saveGame,
@@ -17,4 +18,5 @@ export default {
   enroll,
   isEnrollmentFull,
   scheduleNext,
+  encode,
 };

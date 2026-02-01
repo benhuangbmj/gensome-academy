@@ -6,7 +6,6 @@ export default function scheduleNext() {
   const level = levelContext.provide();
   const nextCustomer = user.roster.shift();
   if (nextCustomer) {
-    console.log(nextCustomer, JSON.parse(nextCustomer));
     createCustomer(level, JSON.parse(nextCustomer));
   }
 }

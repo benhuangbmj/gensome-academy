@@ -33,7 +33,7 @@ export default function customer({
     addAttendance() {
       attendance++;
     },
-    getCustomerStats() {
+    getStats() {
       return {
         performance,
         satisfaction,
