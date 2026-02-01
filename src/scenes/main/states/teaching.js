@@ -31,7 +31,7 @@ export default function teaching(tutor, student) {
 function releaseCheck(tutor, student) {
   student.customerPerformance += 20 * tutor.workerEfficiency;
   student.addAttendance();
-  if (student.customerAttendance >= 2) {
+  if (student.customerAttendance >= 5) {
     updateReputation(student);
     enroll();
   } else {
