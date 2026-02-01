@@ -6,6 +6,7 @@ const defaultValue = {
   gameTime: 0,
   reputation: 0,
   roster: [],
+  attended: [],
   enrolled: 0,
 };
 export default function generateUser(k) {

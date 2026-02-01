@@ -2,13 +2,15 @@ import config from "../../../config";
 import activity from "../../../components/activity";
 import progress from "../../../components/progress";
 import scheduleNext from "../utils/scheduleNext";
-import userContext from "../contexts/userContext";
-import encode from "../utils/encode";
+import enroll from "../utils/enroll";
 export default function teaching(tutor, student) {
-  const duration = 5 * config.TIME_FLOW_RATE;
+  const duration = 50 * config.TIME_FLOW_RATE;
   tutor.workerUsage++;
   student.add([
     pos(),
+    progress(duration, {
+      width: student.width,
+    }),
     activity({
       actor: tutor,
       target: student,
@@ -23,18 +25,14 @@ export default function teaching(tutor, student) {
         releaseCheck(actor, target);
       },
     }),
-    progress(duration, {
-      width: student.width,
-    }),
   ]);
 }
 function releaseCheck(tutor, student) {
-  const user = userContext.provide();
   student.customerPerformance += 20 * tutor.workerEfficiency;
   student.addAttendance();
   if (student.customerAttendance >= 5) {
-    user.enrolled--;
+    enroll();
   } else {
-    user.roster.push(encode(student));
+    enroll(student, true);
   }
 }

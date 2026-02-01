@@ -7,11 +7,13 @@ import factory from "./gameObjs/factory/factory";
 import handlers from "./handlers/handlers";
 import makeMainLevel from "./level";
 const workerTypes = ["secretary", "tutor"];
-const customerTyes = ["student"];
 const GAP = 10;
 export default function gensomeAcademy() {
   userContext.create();
   const user = userContext.provide();
+  user.roster = []; //test
+  user.enrolled = 0; //test
+  user.attended = []; //test
   utilsScene.trackGameTime(user);
   utilsScene.saveGame({ user });
   utilsScene.loadSprites();
@@ -51,8 +53,10 @@ export default function gensomeAcademy() {
     tilePos: vec2(5, 5),
   });
   julia.play("anim");
-  loop(5, () => {
-    factory.createCustomer(mainLevel);
+  wait(5, () => {
+    loop(90, () => {
+      factory.createCustomer(mainLevel);
+    });
   });
   utilsScene.scheduleNext();
   onKeyDown((key) => {

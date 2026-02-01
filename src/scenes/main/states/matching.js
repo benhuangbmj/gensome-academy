@@ -2,7 +2,7 @@ import levelContext from "../contexts/levelContext";
 import enroll from "../utils/enroll";
 import isEnrollmentFull from "../utils/isEnrollmentFull";
 export default function matching(student) {
-  if (!isEnrollmentFull()) {
+  if (!isEnrollmentFull() || student.customerIsReturning) {
     const level = levelContext.provide();
     const availableTutors = level.get("tutor").filter((tutor) => {
       return (
