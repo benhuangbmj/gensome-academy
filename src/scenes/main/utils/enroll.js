@@ -1,16 +1,18 @@
 import userContext from "../contexts/userContext";
 import encode from "./encode";
-export default function enroll(student, isReturning = false) {
+export default function enroll(student, isReturning = null) {
+  const user = userContext.provide();
   if (!student) {
     user.enrolled--;
     return;
   }
-  const user = userContext.provide();
   student.customerIsReturning = true;
   if (!isReturning) {
     user.enrolled++;
-    user.roster.push(encode(student));
-  } else {
-    user.attended.push(encode(student));
+    if (isReturning === null) {
+      user.roster.push(encode(student));
+      return;
+    }
   }
+  user.attended.push(encode(student));
 }
