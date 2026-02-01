@@ -6,14 +6,16 @@ import UI from "./gameObjs/UI";
 import factory from "./gameObjs/factory/factory";
 import handlers from "./handlers/handlers";
 import makeMainLevel from "./level";
+import config from "../../config";
 const workerTypes = ["secretary", "tutor"];
 const GAP = 10;
 export default function gensomeAcademy() {
   userContext.create();
   const user = userContext.provide();
-  user.roster = []; //test
-  user.enrolled = 0; //test
-  user.attended = []; //test
+  // user.roster = []; //test
+  // user.enrolled = 0; //test
+  // user.attended = []; //test
+  // user.reputation = 0; //test
   utilsScene.trackGameTime(user);
   utilsScene.saveGame({ user });
   utilsScene.loadSprites();
@@ -40,7 +42,7 @@ export default function gensomeAcademy() {
   for (let generator in UI) {
     UI[generator](user);
   }
-  const julia = factory.createWorker(mainLevel, {
+  const avatar = factory.createWorker(mainLevel, {
     sprite: "wizarding",
     width: mainLevel.tileWidth(),
     states: ["idle", "check-in", "teaching", "check-out", "reserved"],
@@ -50,11 +52,11 @@ export default function gensomeAcademy() {
     capacity: 1,
     usage: 0,
     type: workerTypes,
-    tilePos: vec2(5, 5),
+    tilePos: mainLevel.get("wait")[0].tilePos.sub(1, 0),
   });
-  julia.play("anim");
-  wait(5, () => {
-    loop(90, () => {
+  avatar.play("anim");
+  wait(5 * config.TIME_FLOW_RATE, () => {
+    loop(90 * config.TIME_FLOW_RATE, () => {
       factory.createCustomer(mainLevel);
     });
   });
