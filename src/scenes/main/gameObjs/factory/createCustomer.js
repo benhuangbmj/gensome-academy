@@ -29,10 +29,13 @@ export default function createCustomer(level, opt = {}) {
   output.onStateEnter("matching", states.matching);
   output.onStateEnter("leaving", states.leaving);
   output.onStateEnter("dismissed", states.customer.dismissed);
+  output.onStateEnter("learning", learning);
   return output;
 }
 //TODO: move the following to an independent file.
 import userContext from "../../contexts/userContext";
-function learning() {
-  user = userContext.provide();
+import encode from "../../utils/encode";
+function learning(tutor, student) {
+  const user = userContext.provide();
+  user.attending.push(encode(student));
 }

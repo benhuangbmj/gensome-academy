@@ -29,6 +29,8 @@ export default function teaching(tutor, student) {
   ]);
 }
 function releaseCheck(tutor, student) {
+  const user = userContext.provide();
+  user.attending.shift();
   student.customerPerformance += 20 * tutor.workerEfficiency;
   student.addAttendance();
   if (student.customerAttendance >= 5) {

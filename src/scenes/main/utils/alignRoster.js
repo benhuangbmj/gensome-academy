@@ -1,4 +1,4 @@
-//TODO: the attending array should be restored when the game loads
+//TODO: the attending array should be restored when the game loads, not being combined with the roster.
 import userContext from "../contexts/userContext";
 export default function alignRoster() {
   const user = userContext.provide();
