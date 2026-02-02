@@ -12,10 +12,10 @@ const GAP = 10;
 export default function gensomeAcademy() {
   userContext.create();
   const user = userContext.provide();
-  // user.roster = []; //test
-  // user.enrolled = 0; //test
-  // user.attended = []; //test
-  // user.reputation = 0; //test
+  //test
+  utilsScene.alignRoster();
+  //test
+
   utilsScene.trackGameTime(user);
   utilsScene.saveGame({ user });
   utilsScene.loadSprites();

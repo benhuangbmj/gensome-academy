@@ -31,3 +31,8 @@ export default function createCustomer(level, opt = {}) {
   output.onStateEnter("dismissed", states.customer.dismissed);
   return output;
 }
+//TODO: move the following to an independent file.
+import userContext from "../../contexts/userContext";
+function learning() {
+  user = userContext.provide();
+}

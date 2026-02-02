@@ -8,6 +8,7 @@ import enroll from "./utils/enroll";
 import isEnrollmentFull from "./utils/isEnrollmentFull";
 import scheduleNext from "./utils/scheduleNext";
 import encode from "./utils/encode";
+import alignRoster from "./utils/alignRoster";
 export default {
   generateUser,
   saveGame,
@@ -19,4 +20,5 @@ export default {
   isEnrollmentFull,
   scheduleNext,
   encode,
+  alignRoster,
 };

@@ -7,6 +7,7 @@ const defaultValue = {
   reputation: 0,
   roster: [],
   attended: [],
+  attending: [],
   enrolled: 0,
 };
 export default function generateUser(k) {
