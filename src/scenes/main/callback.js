@@ -6,7 +6,6 @@ import UI from "./gameObjs/UI";
 import factory from "./gameObjs/factory/factory";
 import handlers from "./handlers/handlers";
 import makeMainLevel from "./level";
-import config from "../../config";
 const workerTypes = ["secretary", "tutor"];
 const GAP = 10;
 export default function gensomeAcademy() {
@@ -55,11 +54,6 @@ export default function gensomeAcademy() {
     tilePos: mainLevel.get("wait")[0].tilePos.sub(1, 0),
   });
   avatar.play("anim");
-  wait(5 * config.TIME_FLOW_RATE, () => {
-    loop(90 * config.TIME_FLOW_RATE, () => {
-      factory.createCustomer(mainLevel);
-    });
-  });
   utilsScene.scheduleNext();
   onKeyDown((key) => {
     if (key == "right") {
@@ -75,4 +69,5 @@ export default function gensomeAcademy() {
       setCamPos(getCamPos().add(vec2(0, 10)));
     }
   });
+  onKeyPress(handlers.recruit);
 }
