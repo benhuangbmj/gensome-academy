@@ -9,6 +9,7 @@ import isEnrollmentFull from "./utils/isEnrollmentFull";
 import scheduleNext from "./utils/scheduleNext";
 import encode from "./utils/encode";
 import alignRoster from "./utils/alignRoster";
+import findExcludedStates from "./utils/findExcludedStates";
 export default {
   generateUser,
   saveGame,
@@ -21,4 +22,5 @@ export default {
   scheduleNext,
   encode,
   alignRoster,
+  findExcludedStates,
 };
