@@ -16,11 +16,13 @@ export default function progress(
   let finished = false;
   let _onProgressFinished = onProgressFinished;
   let _loop = loop;
+  let paused = false;
 
   return {
     id: "progress",
     require: ["pos"],
     update() {
+      if (paused) return;
       if (finished || duration <= 0) {
         if (_loop) {
           this.resetProgress();
@@ -85,6 +87,12 @@ export default function progress(
     },
     get isProgressLooping() {
       return _loop;
+    },
+    get progressPaused() {
+      return paused;
+    },
+    set progressPaused(val) {
+      paused = val;
     },
   };
 }
