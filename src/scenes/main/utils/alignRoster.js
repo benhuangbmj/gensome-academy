@@ -7,5 +7,4 @@ export default function alignRoster() {
   user.attended = [];
   user.attending = [];
   user.enrolled = user.roster.length;
-  console.log("Roster aligned:", user.roster);
 }

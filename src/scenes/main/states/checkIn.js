@@ -10,12 +10,12 @@ export default function checkIn(secretary, student, opt) {
       target: student,
       type: "check-in",
       effect: (actor, target) => {
-        actor.enterState("idle");
-        opt?.isNew && target.enterState("matching", student);
+        opt?.isNew && target.enterStatus("matching", student);
       },
     }),
     progress(duration, {
       width: secretary.width,
     }),
+    "check-in",
   ]);
 }

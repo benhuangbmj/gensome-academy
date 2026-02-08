@@ -21,11 +21,11 @@ export default function checkOut(secretary, tutor, student) {
             target.destroy();
           });
         });
-        actor.enterState("idle");
       },
     }),
     progress(duration, {
       width: secretary.width,
     }),
+    "check-out",
   ]);
 }

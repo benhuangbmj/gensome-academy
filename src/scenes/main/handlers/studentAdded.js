@@ -7,7 +7,7 @@ export default function studentAdded(obj) {
   wait(20, () => {
     if (obj.state === "idle") {
       loopController.cancel();
-      obj.enterState("dismissed", obj);
+      obj.enterStatus("dismissed", obj);
     }
   });
 }
