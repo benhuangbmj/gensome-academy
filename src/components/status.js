@@ -7,12 +7,15 @@ export default function status() {
     get activeStatus() {
       return active;
     },
+    get statusStack() {
+      return stack;
+    },
     enterStatus(state, ...args) {
-      if (state !== "idle") {
+      if (!["idle", "reserved"].includes(state)) {
         if (active !== null) {
           stack.push(active);
           const currProgress = this.get(active)[0];
-          currProgress.progressPaused = true;
+          if (currProgress) currProgress.progressPaused = true;
         }
         active = state;
         const nextProgress = this.get(state)?.[0];
