@@ -4,10 +4,16 @@ export default function worker({
   rate,
   type,
   capacity = 1,
-  usage = 0,
+  usage = new Set(),
 }) {
   return {
     id: "worker",
+    addToUsage(obj) {
+      usage.add(obj);
+    },
+    removeFromUsage(obj) {
+      usage.delete(obj);
+    },
     get workerSalary() {
       return salary;
     },

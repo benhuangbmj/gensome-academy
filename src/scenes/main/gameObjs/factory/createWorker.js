@@ -1,5 +1,6 @@
 import worker from "../../../../components/worker";
 import states from "../../states/states";
+import status from "../../../../components/status";
 export default function createWorker(level, opt) {
   opt.tilePos = opt.tilePos ?? vec2(1, 1);
   const output = level.spawn(
@@ -8,6 +9,7 @@ export default function createWorker(level, opt) {
       pos(opt.pos),
       state(opt.states[0], opt.states),
       worker(opt),
+      status(),
       ...opt.type,
     ],
     opt.tilePos,
