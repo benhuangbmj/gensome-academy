@@ -1,4 +1,5 @@
 import levelContext from "../contexts/levelContext";
+import findExcludedStates from "./findExcludedStates";
 export default function findSecretary(
   nextState,
   args = [],
@@ -9,16 +10,22 @@ export default function findSecretary(
 ) {
   const level = levelContext.provide();
   const findSecretaryLoop = loop(1, () => {
-    const availableSecretaries = level
-      .get("secretary")
-      .filter((secretary) => secretary.state === "idle");
-    if (availableSecretaries.length > 0) {
+    const availableSecretaries = findNonadmin(level);
+    const secretary = availableSecretaries[randi(availableSecretaries.length)];
+    if (secretary) {
       findSecretaryLoop.cancel();
-      const secretary = availableSecretaries[0];
       callback(() => {
-        secretary.enterState(nextState, secretary, ...args, opt);
+        secretary.enterStatus(nextState, secretary, ...args, opt);
       }, secretary);
     }
   });
   return findSecretaryLoop;
+}
+function findNonadmin(level) {
+  const output = findExcludedStates(
+    "secretary",
+    ["check-in", "check-out", "reserved"],
+    level,
+  );
+  return output;
 }
