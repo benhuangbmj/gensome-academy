@@ -7,17 +7,23 @@ export default function matching(student) {
     const availableTutors = level.get("tutor").filter((tutor) => {
       return (
         tutor.state == "idle" ||
-        (tutor.state == "teaching" && tutor.workerUsage < tutor.workerCapacity)
+        (tutor.state == "teaching" &&
+          tutor.workerUsage.size < tutor.workerCapacity)
       );
     });
     if (availableTutors.length > 0) {
-      const tutor = availableTutors[0];
-      tutor.enterState("teaching", tutor, student);
-      student.enterState("learning", tutor, student);
+      const tutor = availableTutors[randi(availableTutors.length)];
+      tutor.addToUsage(student);
+      if (tutor.activeStatus !== "teaching")
+        tutor.enterStatus("teaching", tutor);
+      student.enterStatus("learning", tutor, student);
       return;
     } else {
+      console.log("no tutors available, enrolling student");
       enroll(student);
     }
+  } else {
+    console.log("enrollment full, student leaving");
   }
-  student.enterState("leaving", null, student);
+  student.enterStatus("leaving", null, student);
 }
