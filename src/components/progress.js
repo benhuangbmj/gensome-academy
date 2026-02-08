@@ -22,7 +22,7 @@ export default function progress(
     id: "progress",
     require: ["pos"],
     update() {
-      if (paused) return;
+      if (paused || duration === Infinity) return;
       if (finished || duration <= 0) {
         if (_loop) {
           this.resetProgress();
@@ -37,6 +37,7 @@ export default function progress(
       }
     },
     draw() {
+      if (duration === Infinity) return;
       drawRect({
         pos: offset,
         width,
@@ -72,6 +73,9 @@ export default function progress(
     resetProgress() {
       elapsed = 0;
       finished = false;
+    },
+    finishProgress() {
+      finished = true;
     },
     get onProgressFinished() {
       return _onProgressFinished;
