@@ -1,8 +1,19 @@
-export default function activity({ effect, actor, target, type }) {
+export default function activity({
+  effect = () => {},
+  actor,
+  target,
+  type,
+  ongoing = () => {},
+}) {
   return {
     id: "activity",
     require: ["progress"],
+    update() {
+      if (this.progressPaused) return;
+      ongoing(actor, target);
+    },
     destroy() {
+      actor.resumeStatus();
       effect(actor, target);
     },
     get activityEffect() {
