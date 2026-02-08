@@ -49,7 +49,6 @@ export default function gensomeAcademy() {
     efficiency: 1,
     rate: 30,
     capacity: 1,
-    usage: 0,
     type: workerTypes,
     tilePos: mainLevel.get("wait")[0].tilePos.sub(1, 0),
   });
