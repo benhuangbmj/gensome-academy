@@ -15,10 +15,7 @@ export default function findSecretary(
     if (secretary) {
       findSecretaryLoop.paused = true;
       callback(() => {
-        if (
-          ["check-in", "check-out"].includes(secretary.state) ||
-          ["check-in", "check-out"].includes(secretary.activeStatus)
-        ) {
+        if (["check-in", "check-out"].includes(secretary.activeStatus)) {
           findSecretaryLoop.paused = false;
           return;
         }
