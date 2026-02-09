@@ -59,9 +59,8 @@ function learning(tutor, student) {
         actor.workerUsage.delete(target);
         if (actor.workerUsage.size === 0) {
           actor.get("teaching")[0].finishProgress();
-          actor.enterStatus("idle");
         }
-        target.enterStatus("leaving", tutor, student);
+        target.enterState("leaving", tutor, student);
         scheduleNext();
         releaseCheck(target);
       },

@@ -7,8 +7,13 @@ export default function studentAdded(obj) {
     wait(20 * config.TIME_FLOW_RATE, () => {
       if (obj.state === "idle") {
         loopController.cancel();
-        obj.enterStatus("dismissed", obj);
+        obj.enterState("dismissed", obj);
       }
     });
-  else obj.use(color(RED));
+  else {
+    obj.use(color((obj.customerPerformance * 255) / 100, 0, 0));
+    obj.onUpdate(() => {
+      obj.color.r = (obj.customerPerformance * 255) / 100;
+    });
+  }
 }

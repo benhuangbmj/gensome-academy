@@ -19,11 +19,11 @@ export default function matching(student) {
       student.enterStatus("learning", tutor, student);
       return;
     } else {
-      console.log("no tutors available, enrolling student");
+      debug.log("no tutors available, enrolling student");
       enroll(student);
     }
   } else {
-    console.log("enrollment full, student leaving");
+    debug.log("enrollment full, student leaving");
   }
-  student.enterStatus("leaving", null, student);
+  student.enterState("leaving", null, student);
 }

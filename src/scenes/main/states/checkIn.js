@@ -10,7 +10,7 @@ export default function checkIn(secretary, student, opt) {
       target: student,
       type: "check-in",
       effect: (_, target) => {
-        target.enterStatus("matching", student);
+        target.enterState("matching", student);
       },
     }),
     progress(duration, {
