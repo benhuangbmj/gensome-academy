@@ -13,8 +13,16 @@ export default function findSecretary(
     const availableSecretaries = findNonadmin(level);
     const secretary = availableSecretaries[randi(availableSecretaries.length)];
     if (secretary) {
-      findSecretaryLoop.cancel();
+      findSecretaryLoop.paused = true;
       callback(() => {
+        if (
+          ["check-in", "check-out"].includes(secretary.state) ||
+          ["check-in", "check-out"].includes(secretary.activeStatus)
+        ) {
+          findSecretaryLoop.paused = false;
+          return;
+        }
+        findSecretaryLoop.cancel();
         secretary.enterStatus(nextState, secretary, ...args, opt);
       }, secretary);
     }

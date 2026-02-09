@@ -17,3 +17,4 @@ export default function studentAdded(obj) {
     });
   }
 }
+//TODO: rewrite the waiting logic: put the customer in a queue, and serve one at a time
