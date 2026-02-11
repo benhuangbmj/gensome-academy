@@ -34,7 +34,7 @@ export default function generateUserStatus(user) {
     text(`${user.FP}`, { size: TEXT_SIZE }),
     pos(
       userStatus.width - GAP,
-      2 * GAP + ICON_HEIGHT + (ICON_HEIGHT - TEXT_SIZE) / 2
+      2 * GAP + ICON_HEIGHT + (ICON_HEIGHT - TEXT_SIZE) / 2,
     ),
     color(BLACK),
     anchor("topright"),
@@ -52,7 +52,7 @@ export default function generateUserStatus(user) {
     text(`${user.MP}`, { size: TEXT_SIZE }),
     pos(
       userStatus.width - GAP,
-      3 * GAP + 2 * ICON_HEIGHT + (ICON_HEIGHT - TEXT_SIZE) / 2
+      3 * GAP + 2 * ICON_HEIGHT + (ICON_HEIGHT - TEXT_SIZE) / 2,
     ),
     color(BLACK),
     anchor("topright"),
@@ -70,7 +70,7 @@ export default function generateUserStatus(user) {
     text(`${user.reputation}`, { size: TEXT_SIZE }),
     pos(
       userStatus.width - GAP,
-      4 * GAP + 3 * ICON_HEIGHT + (ICON_HEIGHT - TEXT_SIZE) / 2
+      4 * GAP + 3 * ICON_HEIGHT + (ICON_HEIGHT - TEXT_SIZE) / 2,
     ),
     color(BLACK),
     anchor("topright"),
@@ -96,8 +96,8 @@ export default function generateUserStatus(user) {
         },
         () => {
           debug.log("Subtracting cash...");
-          user.cash = Math.max(0, user.cash - 1000);
-        }
+          user.cash = Math.max(0, user.cash - 10000);
+        },
       );
     });
     facilityIcon.onClick(() => {
@@ -109,7 +109,7 @@ export default function generateUserStatus(user) {
         () => {
           debug.log("Subtracting FP...");
           user.FP = Math.max(0, user.FP - 100);
-        }
+        },
       );
     });
     gearIcon.onClick(() => {
@@ -121,7 +121,7 @@ export default function generateUserStatus(user) {
         () => {
           debug.log("Subtracting MP...");
           user.MP = Math.max(0, user.MP - 100);
-        }
+        },
       );
     });
     trophyIcon.onClick(() => {
@@ -133,7 +133,7 @@ export default function generateUserStatus(user) {
         () => {
           debug.log("Subtracting reputation...");
           user.reputation = Math.max(0, user.reputation - 10);
-        }
+        },
       );
     });
   }

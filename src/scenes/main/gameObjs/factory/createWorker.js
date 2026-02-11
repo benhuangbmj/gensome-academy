@@ -10,6 +10,7 @@ export default function createWorker(level, opt) {
       state(opt.states[0], opt.states),
       worker(opt),
       status(),
+      area(),
       ...opt.type,
     ],
     opt.tilePos,

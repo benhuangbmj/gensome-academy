@@ -24,7 +24,19 @@ export default function createCustomer(level, opt = {}) {
       status(),
       agent({ speed: 2 * level.tileWidth() }),
       customer(opt.customer),
+      area(),
       opt.customer.type,
+      {
+        add() {
+          this.onClick(() => {
+            console.log(
+              "customer status and state: ",
+              this.activeStatus,
+              this.state,
+            );
+          });
+        },
+      },
     ],
     opt.tilePos,
   );
@@ -35,6 +47,7 @@ export default function createCustomer(level, opt = {}) {
   return output;
 }
 //TODO: move the following to an independent file.
+//Issue: customer becomes status learning but the progress doesn't start, and the state is still reserved.
 import userContext from "../../contexts/userContext";
 import encode from "../../utils/encode";
 import config from "../../../../config";

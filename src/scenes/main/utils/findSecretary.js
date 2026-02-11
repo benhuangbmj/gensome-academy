@@ -10,12 +10,16 @@ export default function findSecretary(
 ) {
   const level = levelContext.provide();
   const findSecretaryLoop = loop(1, () => {
+    if (findSecretaryLoop.renewed === true)
+      console.log("the searching loop renews!");
     const availableSecretaries = findNonadmin(level);
     const secretary = availableSecretaries[randi(availableSecretaries.length)];
     if (secretary) {
       findSecretaryLoop.paused = true;
       callback(() => {
         if (["check-in", "check-out"].includes(secretary.activeStatus)) {
+          console.log("false interruption! Renew search loop.");
+          findSecretaryLoop.renewed = true;
           findSecretaryLoop.paused = false;
           return;
         }

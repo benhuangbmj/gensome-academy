@@ -13,6 +13,9 @@ export default function status() {
     enterStatus(state, ...args) {
       if (!["idle", "reserved"].includes(state)) {
         if (active !== null) {
+          if (["check-in", "check out"].includes(active)) {
+            console.log("interrupt ", active, " with ", state);
+          }
           stack.push(active);
           const currProgress = this.get(active)[0];
           if (currProgress) currProgress.progressPaused = true;
