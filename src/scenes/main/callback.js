@@ -60,10 +60,6 @@ export default function gensomeAcademy() {
     tilePos: mainLevel.get("wait")[0].tilePos.sub(1, 0),
   });
   avatar.play("anim");
-  avatar.onClick(() => {
-    console.log("avatar status and state: ", avatar.activeStatus, avatar.state);
-    //issue: avatar becomes activeStatus.teaching, state checkout, but the student is not learning, and the game gets stuck
-  });
   utilsScene.scheduleNext();
   onKeyDown((key) => {
     if (key == "right") {

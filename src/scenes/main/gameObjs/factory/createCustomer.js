@@ -28,21 +28,6 @@ export default function createCustomer(level, opt = {}) {
       customer(opt.customer),
       area(),
       opt.customer.type,
-      {
-        add() {
-          //debug
-          this.statusHistory = [];
-          this.onClick(() => {
-            console.log(
-              this.id,
-              "customer status and state: ",
-              this.activeStatus,
-              this.state,
-              this.statusHistory,
-            );
-          });
-        },
-      },
     ],
     opt.tilePos,
   );
@@ -61,7 +46,6 @@ import activity from "../../../../components/activity";
 import scheduleNext from "../../utils/scheduleNext";
 import enroll from "../../utils/enroll";
 function learning(tutor, student) {
-  student.statusHistory.push("learning"); //debug
   const user = userContext.provide();
   user.attending.push(encode(student));
   const duration = 50 * config.TIME_FLOW_RATE;
