@@ -1,7 +1,7 @@
 import config from "../../../config";
 import activity from "../../../components/activity";
 import progress from "../../../components/progress";
-export default function checkIn(secretary, student, opt) {
+export default function checkIn(secretary, student) {
   const duration = (5 * config.TIME_FLOW_RATE) / secretary.workerEfficiency;
   secretary.add([
     pos(),

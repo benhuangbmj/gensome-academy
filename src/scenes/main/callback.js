@@ -44,7 +44,14 @@ export default function gensomeAcademy() {
   const avatar = factory.createWorker(mainLevel, {
     sprite: "wizarding",
     width: mainLevel.tileWidth(),
-    states: ["idle", "check-in", "teaching", "check-out", "reserved"],
+    states: [
+      "idle",
+      "check-in",
+      "teaching",
+      "check-out",
+      "reserved",
+      "resumed",
+    ],
     salary: 0,
     efficiency: 1,
     rate: 30,
@@ -53,13 +60,8 @@ export default function gensomeAcademy() {
     tilePos: mainLevel.get("wait")[0].tilePos.sub(1, 0),
   });
   avatar.play("anim");
-  const loopTest = loop(1, () => {
-    console.log("i am looping");
-  });
-  loopTest.paused = true;
   avatar.onClick(() => {
-    console.log(avatar.activeStatus, avatar.state);
-    loopTest.paused = !loopTest.paused;
+    console.log("avatar status and state: ", avatar.activeStatus, avatar.state);
     //issue: avatar becomes activeStatus.teaching, state checkout, but the student is not learning, and the game gets stuck
   });
   utilsScene.scheduleNext();

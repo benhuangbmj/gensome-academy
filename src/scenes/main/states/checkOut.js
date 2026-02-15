@@ -15,10 +15,10 @@ export default function checkOut(secretary, tutor, student) {
       type: "check-out",
       effect: (actor, target) => {
         user.cash += tutor?.workerRate ?? 0;
-        target.setTarget(level.get("exit")[0].pos);
-        target.onTargetReached(() => {
+        target?.setTarget(level.get("exit")[0]?.pos);
+        target?.onTargetReached(() => {
           wait(2, () => {
-            target.destroy();
+            target?.destroy();
           });
         });
       },

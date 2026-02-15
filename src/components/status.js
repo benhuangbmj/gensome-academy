@@ -1,5 +1,6 @@
+const transitionStatus = ["idle", "reserved", "resumed"];
 export default function status() {
-  let active = null;
+  let active = "idle";
   let stack = [];
   return {
     id: "status",
@@ -11,11 +12,8 @@ export default function status() {
       return stack;
     },
     enterStatus(state, ...args) {
-      if (!["idle", "reserved"].includes(state)) {
-        if (active !== null) {
-          if (["check-in", "check out"].includes(active)) {
-            console.log("interrupt ", active, " with ", state);
-          }
+      if (!transitionStatus.includes(state)) {
+        if (!transitionStatus.includes(active)) {
           stack.push(active);
           const currProgress = this.get(active)[0];
           if (currProgress) currProgress.progressPaused = true;
@@ -27,12 +25,12 @@ export default function status() {
           return;
         }
       } else {
-        active = null;
+        active = state;
       }
       this.enterState(state, ...args);
     },
     resumeStatus() {
-      active = null;
+      active = "resumed";
       const lastStatus = stack.pop() ?? "idle";
       this.enterStatus(lastStatus);
     },

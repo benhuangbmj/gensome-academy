@@ -1,6 +1,7 @@
 import customer from "../../../../components/customer";
 import states from "../../states/states";
 import status from "../../../../components/status";
+import config from "../../../../config";
 export default function createCustomer(level, opt = {}) {
   opt.tilePos = opt.tilePos ?? level.get("exit")[0].tilePos;
   opt.customer = opt.customer ?? {};
@@ -13,6 +14,7 @@ export default function createCustomer(level, opt = {}) {
     "leaving",
     "reserved",
     "dismissed",
+    "resumed",
   ];
   opt.spriteCompOpt = opt.spriteCompOpt ?? {};
   opt.spriteCompOpt.height = opt.spriteCompOpt.height ?? level.tileHeight();
@@ -22,17 +24,21 @@ export default function createCustomer(level, opt = {}) {
       pos(opt?.pos),
       state(opt.states[0], opt.states),
       status(),
-      agent({ speed: 2 * level.tileWidth() }),
+      agent({ speed: (2 * level.tileWidth()) / config.TIME_FLOW_RATE }),
       customer(opt.customer),
       area(),
       opt.customer.type,
       {
         add() {
+          //debug
+          this.statusHistory = [];
           this.onClick(() => {
             console.log(
+              this.id,
               "customer status and state: ",
               this.activeStatus,
               this.state,
+              this.statusHistory,
             );
           });
         },
@@ -50,12 +56,12 @@ export default function createCustomer(level, opt = {}) {
 //Issue: customer becomes status learning but the progress doesn't start, and the state is still reserved.
 import userContext from "../../contexts/userContext";
 import encode from "../../utils/encode";
-import config from "../../../../config";
 import progress from "../../../../components/progress";
 import activity from "../../../../components/activity";
 import scheduleNext from "../../utils/scheduleNext";
 import enroll from "../../utils/enroll";
 function learning(tutor, student) {
+  student.statusHistory.push("learning"); //debug
   const user = userContext.provide();
   user.attending.push(encode(student));
   const duration = 50 * config.TIME_FLOW_RATE;
