@@ -1,4 +1,4 @@
-import storeMenu from "../components/operationMenu.js/storeMenu";
+import storeMenu from "../components/operationMenu/storeMenu";
 let menuOpened;
 let storeMenuObj;
 export default function functionBtnClicked(btnTag) {
