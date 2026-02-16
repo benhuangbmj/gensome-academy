@@ -43,37 +43,40 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
         area(),
         fixed(),
       ]);
-      itemBtn.onDraw(() => {
-        drawSprite({
-          sprite: item.sprite,
-          width: UISpecs.TILE_WIDTH,
-          pos: vec2(
-            (UISpecs.BTN_WIDTH - UISpecs.TILE_WIDTH) / 2,
-            (UISpecs.BTN_HEIGHT - UISpecs.TILE_HEIGHT) / 2,
-          ),
+      facilityBtnHandler(item, itemBtn);
+      function facilityBtnHandler(item, itemBtn) {
+        itemBtn.onDraw(() => {
+          drawSprite({
+            sprite: item.sprite,
+            width: UISpecs.TILE_WIDTH,
+            pos: vec2(
+              (UISpecs.BTN_WIDTH - UISpecs.TILE_WIDTH) / 2,
+              (UISpecs.BTN_HEIGHT - UISpecs.TILE_HEIGHT) / 2,
+            ),
+          });
         });
-      });
-      itemBtn.onClick(() => {
-        if (mouseMovedEvent) {
-          mouseMovedEvent.cancel();
-        }
-        if (mousePressedEvent) {
-          mousePressedEvent.cancel();
-        }
-        let isApproved = false;
-        mouseMovedEvent = onMouseMove((eventPos) =>
-          handlers.mouseMovedAddItem(
-            eventPos,
-            (value) => {
-              isApproved = value;
-            },
-            item,
-          ),
-        );
-        mousePressedEvent = onMousePress((btn) => {
-          handlers.mousePressedAddItem(btn, item, isApproved);
+        itemBtn.onClick(() => {
+          if (mouseMovedEvent) {
+            mouseMovedEvent.cancel();
+          }
+          if (mousePressedEvent) {
+            mousePressedEvent.cancel();
+          }
+          let isApproved = false;
+          mouseMovedEvent = onMouseMove((eventPos) =>
+            handlers.mouseMovedAddItem(
+              eventPos,
+              (value) => {
+                isApproved = value;
+              },
+              item,
+            ),
+          );
+          mousePressedEvent = onMousePress((btn) => {
+            handlers.mousePressedAddItem(btn, item, isApproved);
+          });
         });
-      });
+      }
     }
   }
 
