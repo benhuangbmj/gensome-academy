@@ -10,17 +10,22 @@ export default function progress(
     offset = vec2(0, 0),
     loop = false,
     onProgressFinished,
+    onProgressDestroyed,
   } = {},
 ) {
   let elapsed = 0;
   let finished = false;
   let _onProgressFinished = onProgressFinished;
   let _loop = loop;
+  let _onProgressDestroyed = onProgressDestroyed;
   let paused = false;
 
   return {
     id: "progress",
     require: ["pos"],
+    destroy() {
+      _onProgressDestroyed?.(this);
+    },
     update() {
       if (paused || duration === Infinity) return;
       if (finished || duration <= 0) {
