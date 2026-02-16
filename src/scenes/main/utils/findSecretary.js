@@ -26,9 +26,9 @@ export default function findSecretary(
         secretary.enterStatus(nextState, secretary, ...args, opt);
       }, secretary);
       preventStaleStatus(customer, findSecretaryLoop);
-      return findSecretaryLoop;
     }
   });
+  return findSecretaryLoop;
 }
 function findNonadmin(level) {
   const output = findExcludedStates(
