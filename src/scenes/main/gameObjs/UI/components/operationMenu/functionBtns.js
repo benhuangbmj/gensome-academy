@@ -2,7 +2,7 @@ import UIContext from "../../../../contexts/UIContext";
 const btnData = [
   { tag: "personnel", sprite: "paper" },
   { tag: "facilities", sprite: "toolbox" },
-  { tag: "practice", sprite: "pencil" },
+  { tag: "practices", sprite: "pencil" },
 ];
 export default function functionBtns(handler) {
   const UISpecs = UIContext.provide();

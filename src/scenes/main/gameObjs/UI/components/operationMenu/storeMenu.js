@@ -1,6 +1,8 @@
 import UIContext from "../../../../contexts/UIContext";
 import dataContext from "../../../../contexts/dataContext";
 import handlers from "../../../../handlers/handlers";
+import progress from "../../../../../../components/progress";
+import userContext from "../../../../contexts/userContext";
 const itemData = dataContext.provide();
 let mouseMovedEvent, mousePressedEvent;
 export default function storeMenu(btnTag) {
@@ -43,7 +45,53 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
         area(),
         fixed(),
       ]);
-      facilityBtnHandler(item, itemBtn);
+      attachHandler(btnTag, item, itemBtn);
+      function attachHandler(btnTag, item, itemBtn) {
+        switch (btnTag) {
+          case "facilities":
+            facilityBtnHandler(item, itemBtn);
+            break;
+          case "practices":
+            practiceBtnHandler(item, itemBtn);
+            break;
+        }
+      }
+      function practiceBtnHandler(item, itemBtn) {
+        itemBtn.onDraw(() => {
+          drawText({
+            text: item.name,
+            size: 24,
+            width: UISpecs.BTN_WIDTH,
+            color: BLACK,
+            pos: vec2(
+              (UISpecs.BTN_WIDTH - 24) / 2,
+              (UISpecs.BTN_HEIGHT - 24) / 2,
+            ),
+          });
+        });
+        itemBtn.onClick(() => {
+          add([
+            rect(300, 100),
+            outline(4),
+            fixed(),
+            {
+              add() {
+                this.use(
+                  progress(item.duration, {
+                    offset: vec2((this.width - 120) / 2, (this.height - 6) / 2),
+                    onProgressDestroyed: () => {
+                      const user = userContext.provide();
+                      user.FP += parseInt(item.FP_rate);
+                      user.MP += parseInt(item.MP_rate);
+                    },
+                  }),
+                  this.use(pos((width() - this.width) / 2, UISpecs.GAP)),
+                );
+              },
+            },
+          ]);
+        });
+      }
       function facilityBtnHandler(item, itemBtn) {
         itemBtn.onDraw(() => {
           drawSprite({
