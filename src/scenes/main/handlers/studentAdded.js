@@ -1,9 +1,10 @@
 import findSecretary from "../utils/findSecretary";
 import moveToSec from "../utils/moveToSec";
+import config from "../../../config";
 export default function studentAdded(obj) {
   const loopController = findSecretary(obj, "check-in", [obj], moveToSec(obj));
   if (!obj.customerIsReturning)
-    wait(30, () => {
+    wait(30 * config.TIME_FLOW_RATE, () => {
       if (obj.state === "idle") {
         loopController.cancel();
         obj.enterState("dismissed", obj);
