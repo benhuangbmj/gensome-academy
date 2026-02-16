@@ -3,6 +3,8 @@ import dataContext from "../../../../contexts/dataContext";
 import handlers from "../../../../handlers/handlers";
 import progress from "../../../../../../components/progress";
 import userContext from "../../../../contexts/userContext";
+import factory from "../../../factory/factory";
+import levelContext from "../../../../contexts/levelContext";
 const itemData = dataContext.provide();
 let mouseMovedEvent, mousePressedEvent;
 export default function storeMenu(btnTag) {
@@ -54,7 +56,62 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
           case "practices":
             practiceBtnHandler(item, itemBtn);
             break;
+          case "personnel":
+            personnelBtnHandler(item, itemBtn);
+            break;
         }
+      }
+      function personnelBtnHandler(item, itemBtn) {
+        function mouusePressedAddPersonnel(btn, item) {
+          if (btn != "left") return;
+          const level = levelContext.provide();
+          const personnelTypes = [];
+          console.log(
+            typeof item.secretary,
+            typeof item.tutor,
+            typeof item.rate,
+          );
+          item.secretary && personnelTypes.push("secretary");
+          item.tutor && personnelTypes.push("tutor");
+          const personnelOpt = {
+            sprite: item.sprite,
+            width: UISpecs.TILE_WIDTH,
+            states: [
+              "idle",
+              "check-in",
+              "teaching",
+              "check-out",
+              "reserved",
+              "resumed",
+            ],
+            salary: item.salary,
+            efficiency: item.efficiency,
+            rate: item.rate,
+            type: personnelTypes,
+            tilePos: level.adjustedPos2Tile(mousePos()),
+          };
+          const personnel = factory.createWorker(level, personnelOpt);
+          personnel.play("anim");
+        }
+        itemBtn.onDraw(() => {
+          drawSprite({
+            sprite: item.sprite,
+            width: UISpecs.TILE_WIDTH,
+            pos: vec2(
+              (UISpecs.BTN_WIDTH - UISpecs.TILE_WIDTH) / 2,
+              (UISpecs.BTN_HEIGHT - UISpecs.TILE_HEIGHT) / 2,
+            ),
+          });
+        });
+        itemBtn.onClick(() => {
+          const mouseReleaseController = onMouseRelease(() => {
+            const mousePressController = onMousePress((btn) => {
+              mouusePressedAddPersonnel(btn, item);
+              mousePressController.cancel();
+            });
+            mouseReleaseController.cancel();
+          });
+        });
       }
       function practiceBtnHandler(item, itemBtn) {
         itemBtn.onDraw(() => {
@@ -81,8 +138,8 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
                     offset: vec2((this.width - 120) / 2, (this.height - 6) / 2),
                     onProgressDestroyed: () => {
                       const user = userContext.provide();
-                      user.FP += parseInt(item.FP_rate);
-                      user.MP += parseInt(item.MP_rate);
+                      user.FP += item.FP_rate;
+                      user.MP += item.MP_rate;
                     },
                   }),
                   this.use(pos((width() - this.width) / 2, UISpecs.GAP)),
