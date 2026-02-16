@@ -64,13 +64,10 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
       function personnelBtnHandler(item, itemBtn) {
         function mouusePressedAddPersonnel(btn, item) {
           if (btn != "left") return;
+          const user = userContext.provide();
+          if (user.cash < item.salary || user.FP < item.FP_cost) return;
           const level = levelContext.provide();
           const personnelTypes = [];
-          console.log(
-            typeof item.secretary,
-            typeof item.tutor,
-            typeof item.rate,
-          );
           item.secretary && personnelTypes.push("secretary");
           item.tutor && personnelTypes.push("tutor");
           const personnelOpt = {
@@ -92,6 +89,8 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
           };
           const personnel = factory.createWorker(level, personnelOpt);
           personnel.play("anim");
+          user.cash -= item.salary;
+          user.FP -= item.FP_cost;
         }
         itemBtn.onDraw(() => {
           drawSprite({
