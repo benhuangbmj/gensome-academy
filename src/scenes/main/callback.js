@@ -41,25 +41,6 @@ export default function gensomeAcademy() {
   for (let generator in UI) {
     UI[generator](user);
   }
-  const avatar = factory.createWorker(mainLevel, {
-    sprite: "wizarding",
-    width: mainLevel.tileWidth(),
-    states: [
-      "idle",
-      "check-in",
-      "teaching",
-      "check-out",
-      "reserved",
-      "resumed",
-    ],
-    salary: 0,
-    efficiency: 1,
-    rate: 30,
-    capacity: 1,
-    type: workerTypes,
-    tilePos: mainLevel.get("wait")[0].tilePos.sub(1, 0),
-  });
-  avatar.play("anim");
   utilsScene.scheduleNext();
   onKeyDown((key) => {
     if (key == "right") {

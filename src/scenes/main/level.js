@@ -15,10 +15,7 @@ export default function makeMainLevel({ TILE_WIDTH, TILE_HEIGHT }) {
     "|************|",
     "--------------",
   ];
-  //issue: padding spaces here to avoid out of bound error. There may be a bug in the engine for levelComp.getAt().
-  levelMap.forEach((r, i, arr) => {
-    arr[i] = r + "                                        ";
-  });
+  //issue: There may be a bug in the engine for levelComp.getAt() because tiles beyond the level scope may be deemed as "available".
   const mainLevelComp = level(levelMap, {
     tileWidth: TILE_WIDTH,
     tileHeight: TILE_HEIGHT,
