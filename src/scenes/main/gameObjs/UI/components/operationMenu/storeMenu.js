@@ -3,8 +3,6 @@ import dataContext from "../../../../contexts/dataContext";
 import handlers from "../../../../handlers/handlers";
 import progress from "../../../../../../components/progress";
 import userContext from "../../../../contexts/userContext";
-import factory from "../../../factory/factory";
-import levelContext from "../../../../contexts/levelContext";
 import runtimeContext from "../../../../contexts/runtimeContext";
 const itemData = dataContext.provide();
 let { mouseMovedEvent, mousePressedEvent } = runtimeContext.provide();
@@ -63,36 +61,6 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
         }
       }
       function personnelBtnHandler(item, itemBtn) {
-        function mouusePressedAddPersonnel(btn, item) {
-          if (btn != "left") return;
-          const user = userContext.provide();
-          if (user.cash < item.salary || user.FP < item.FP_cost) return;
-          const level = levelContext.provide();
-          const personnelTypes = [];
-          item.secretary && personnelTypes.push("secretary");
-          item.tutor && personnelTypes.push("tutor");
-          const personnelOpt = {
-            sprite: item.sprite,
-            width: UISpecs.TILE_WIDTH,
-            states: [
-              "idle",
-              "check-in",
-              "teaching",
-              "check-out",
-              "reserved",
-              "resumed",
-            ],
-            salary: item.salary,
-            efficiency: item.efficiency,
-            rate: item.rate,
-            type: personnelTypes,
-            tilePos: level.adjustedPos2Tile(mousePos()),
-          };
-          const personnel = factory.createWorker(level, personnelOpt);
-          personnel.play("anim");
-          user.cash -= item.salary;
-          user.FP -= item.FP_cost;
-        }
         itemBtn.onDraw(() => {
           drawSprite({
             sprite: item.sprite,
@@ -104,13 +72,7 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
           });
         });
         itemBtn.onClick(() => {
-          const mouseReleaseController = onMouseRelease(() => {
-            const mousePressController = onMousePress((btn) => {
-              mouusePressedAddPersonnel(btn, item);
-              mousePressController.cancel();
-            });
-            mouseReleaseController.cancel();
-          });
+          handlers.addPersonnel(item);
         });
       }
       function practiceBtnHandler(item, itemBtn) {

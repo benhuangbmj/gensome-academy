@@ -2,7 +2,8 @@ import levelContext from "../contexts/levelContext";
 import utils from "../../../utils";
 let previousTilePos = null;
 export default function mouseMovedAddItem(eventPos, approve, item) {
-  item.size = vec2(item.size_w, item.size_h);
+  item.size =
+    item.size_w && item.size_h ? vec2(item.size_w, item.size_h) : vec2(1, 1);
   approve(false);
   const level = levelContext.provide();
   const tilePos = level.adjustedPos2Tile(eventPos);
