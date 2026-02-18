@@ -14,5 +14,8 @@ export default function addItem(item) {
     (btn) => {
       handlers.mousePressedAddItem(btn, item, isApproved);
     },
+    () => {
+      trigger("cancelDrawOnTile", "*");
+    },
   );
 }

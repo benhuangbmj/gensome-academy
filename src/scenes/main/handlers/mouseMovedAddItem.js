@@ -22,6 +22,9 @@ export default function mouseMovedAddItem(eventPos, approve, item) {
     ) {
       drawOnTile.cancel();
     }
+    on("cancelDrawOnTile", "*", () => {
+      drawOnTile.cancel();
+    });
   });
 }
 function drawItemSprite(level, tilePos, item) {

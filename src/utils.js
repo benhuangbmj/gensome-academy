@@ -76,7 +76,11 @@ function makeBySize(tilePos, size, callback) {
     }
   }
 }
-function registerMouseEvents(mouseMovedHandler, mousePressedHandler) {
+function registerMouseEvents(
+  mouseMovedHandler,
+  mousePressedHandler,
+  cancelHandler,
+) {
   const runtime = runtimeContext.provide();
   if (runtime.mouseMovedEvent) {
     runtime.mouseMovedEvent.cancel();
@@ -86,7 +90,15 @@ function registerMouseEvents(mouseMovedHandler, mousePressedHandler) {
   }
   const mouseReleaseController = onMouseRelease(() => {
     runtime.mouseMovedEvent = onMouseMove(mouseMovedHandler);
-    runtime.mousePressedEvent = onMousePress(mousePressedHandler);
+    runtime.mousePressedEvent = onMousePress((btn) => {
+      if (btn != "left") {
+        runtime.mousePressedEvent?.cancel();
+        runtime.mouseMovedEvent?.cancel();
+        cancelHandler?.();
+        return;
+      }
+      mousePressedHandler(btn);
+    });
     mouseReleaseController.cancel();
   });
 }

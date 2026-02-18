@@ -17,6 +17,9 @@ export default function addPersonnel(item) {
     (btn) => {
       mousePressedAddPersonnel(btn, item, isApproved);
     },
+    () => {
+      trigger("cancelDrawOnTile", "*");
+    },
   );
 }
 
