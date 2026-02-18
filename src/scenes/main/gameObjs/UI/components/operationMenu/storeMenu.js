@@ -5,8 +5,9 @@ import progress from "../../../../../../components/progress";
 import userContext from "../../../../contexts/userContext";
 import factory from "../../../factory/factory";
 import levelContext from "../../../../contexts/levelContext";
+import runtimeContext from "../../../../contexts/runtimeContext";
 const itemData = dataContext.provide();
-let mouseMovedEvent, mousePressedEvent;
+let { mouseMovedEvent, mousePressedEvent } = runtimeContext.provide();
 export default function storeMenu(btnTag) {
   let page = 1;
   const UISpecs = UIContext.provide();
@@ -160,25 +161,7 @@ function generateCatalog(menuContainer, btnTag, page, UISpecs) {
           });
         });
         itemBtn.onClick(() => {
-          if (mouseMovedEvent) {
-            mouseMovedEvent.cancel();
-          }
-          if (mousePressedEvent) {
-            mousePressedEvent.cancel();
-          }
-          let isApproved = false;
-          mouseMovedEvent = onMouseMove((eventPos) =>
-            handlers.mouseMovedAddItem(
-              eventPos,
-              (value) => {
-                isApproved = value;
-              },
-              item,
-            ),
-          );
-          mousePressedEvent = onMousePress((btn) => {
-            handlers.mousePressedAddItem(btn, item, isApproved);
-          });
+          handlers.addItem(item);
         });
       }
     }

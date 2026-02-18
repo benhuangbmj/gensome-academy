@@ -1,10 +1,9 @@
 //NOTE: This hasn't been deployed yet.
-const customerQueue = new Map();
+//const customerQueue = new Map();
+const runtime = { mouseMovedEvent: null, mousePressedEvent: null };
 
 function provide() {
-  return {
-    customerQueue,
-  };
+  return runtime;
 }
 
 export default {

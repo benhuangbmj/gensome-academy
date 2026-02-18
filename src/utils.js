@@ -1,3 +1,4 @@
+import runtimeContext from "./scenes/main/contexts/runtimeContext";
 function snapToTileCenter({ level, position }) {
   const tilePos = level.pos2Tile(position);
   const tileWorldPos = level.tile2Pos(tilePos);
@@ -75,10 +76,25 @@ function makeBySize(tilePos, size, callback) {
     }
   }
 }
+function registerMouseEvents(mouseMovedHandler, mousePressedHandler) {
+  const runtime = runtimeContext.provide();
+  if (runtime.mouseMovedEvent) {
+    runtime.mouseMovedEvent.cancel();
+  }
+  if (runtime.mousePressedEvent) {
+    runtime.mousePressedEvent.cancel();
+  }
+  const mouseReleaseController = onMouseRelease(() => {
+    runtime.mouseMovedEvent = onMouseMove(mouseMovedHandler);
+    runtime.mousePressedEvent = onMousePress(mousePressedHandler);
+    mouseReleaseController.cancel();
+  });
+}
 export default {
   snapToTileCenter,
   chase,
   adjustPosition,
   playDirectionAnim,
   makeBySize,
+  registerMouseEvents,
 };
