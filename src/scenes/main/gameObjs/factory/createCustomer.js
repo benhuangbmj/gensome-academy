@@ -46,6 +46,7 @@ import activity from "../../../../components/activity";
 import scheduleNext from "../../utils/scheduleNext";
 import enroll from "../../utils/enroll";
 function learning(tutor, student) {
+  if (!student || !student.exists()) return;
   const user = userContext.provide();
   user.attending.push(encode(student));
   const duration = 50 * config.TIME_FLOW_RATE;
