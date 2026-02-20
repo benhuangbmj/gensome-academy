@@ -15,7 +15,7 @@ export default function loadSprites() {
   loadSprite("copy-machine", "sprites/Copy Machine.png");
   loadSprite("gear", "sprites/gear.png");
 
-  loadSprite("tropyhy", "sprites/trophy.png");
+  loadSprite("trophy", "sprites/trophy.png");
   loadSprite("floor", "sprites/tilestonebricks.png");
   loadCrew("sprite", "sparkling");
   loadCrew("sprite", "paper");
