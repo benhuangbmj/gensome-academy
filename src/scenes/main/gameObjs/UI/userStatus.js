@@ -2,7 +2,7 @@
 export default function generateUserStatus(user) {
   const GAP = 10;
   const WIDTH = Math.min(300, width() / 3 - 2 * GAP);
-  const TEXT_SIZE = 24;
+  const TEXT_SIZE = width() > 600? 32 :20;
   const ICON_HEIGHT = 36;
   const statusData = [
   {sprite: {name: "coin", opt: {anim: "shine"}},text: () =>user.cash, onClick: coinIconOnClick },
@@ -30,7 +30,7 @@ export default function generateUserStatus(user) {
         }
       }]);
     userStatus.add([
-      text(data.text() !== null ? `${data.text()}` : "", { size: TEXT_SIZE }),
+      text(data.text() !== null ? `${convertUnit(data.text())}` : "", { size: TEXT_SIZE }),
       pos(
         userStatus.width - GAP,
         (i + 1) * GAP + i * ICON_HEIGHT + (ICON_HEIGHT - TEXT_SIZE) / 2,
@@ -39,12 +39,12 @@ export default function generateUserStatus(user) {
       anchor("topright"),
       {
         draw() {
-          this.text = data.text() !== null ? `${data.text()}` : "";
+          this.text = data.text() !== null ? `${convertUnit(data.text())}` : "";
         }
       }
     ]);  
     })
-    
+
   function mouseClickedAction(cbLeft, cbRight) {
     if (isMousePressed("left")) {
       cbLeft();
@@ -100,5 +100,17 @@ export default function generateUserStatus(user) {
           user.reputation = Math.max(0, user.reputation - 10);
         },
       );
+    }
+    function convertUnit(num) {
+      if (num >= 1000) {
+        return (num / 1000).toFixed(2) + "K";
+      }
+      if (num >= 1000000) {
+        return (num / 1000000).toFixed(2) + "M";
+      }
+      if (num >= 1000000000) {
+        return (num / 1000000000).toFixed(2) + "B";
+      }
+      return num.toString();
     }
 }
