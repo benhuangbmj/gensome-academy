@@ -102,6 +102,7 @@ export default function generateUserStatus(user) {
       );
     }
     function convertUnit(num) {
+      if(width() <= 500) {
       if (num >= 1000) {
         return (num / 1000).toFixed(2) + "K";
       }
@@ -110,7 +111,7 @@ export default function generateUserStatus(user) {
       }
       if (num >= 1000000000) {
         return (num / 1000000000).toFixed(2) + "B";
-      }
+      }}
       return num.toString();
     }
 }
