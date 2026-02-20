@@ -1,9 +1,16 @@
+const statusData = [
+  {sprite: {name: "coin", opt: {anim: "shine"}}},
+  {sprite: {name: "controller", opt: {}}},
+  {sprite: {name: "config", opt: {}}},
+  {sprite: {name: "star", opt: {}}},
+  {sprite: {name: "onion", opt:{}}}
+]
 export default function generateUserStatus(user) {
   let GAP = 10;
-  let WIDTH = Math.min(200, width() / 2 - 2 * GAP);
+  let WIDTH = Math.min(300, width() / 3 - 2 * GAP);
   let TEXT_SIZE = 24;
   let ICON_HEIGHT = 36;
-  let HEIGHT = 5 * GAP + 4 * ICON_HEIGHT;
+  let HEIGHT = (statusData.length + 1) * GAP + statusData.length * ICON_HEIGHT;
   const userStatus = add([
     pos(width() - WIDTH - GAP, GAP),
     rect(WIDTH, HEIGHT),
@@ -29,6 +36,9 @@ export default function generateUserStatus(user) {
     sprite("copy-machine", { height: ICON_HEIGHT + 8 }),
     pos(GAP - 4, 2 * GAP + ICON_HEIGHT - 10),
     area(),
+    {add() {
+      this.hidden = true;
+    }}
   ]);
   const FPText = userStatus.add([
     text(`${user.FP}`, { size: TEXT_SIZE }),
@@ -47,6 +57,9 @@ export default function generateUserStatus(user) {
     sprite("gear", { height: ICON_HEIGHT }),
     pos(GAP, 3 * GAP + 2 * ICON_HEIGHT),
     area(),
+    {add() {
+      this.hidden = true;
+    }}
   ]);
   const MPText = userStatus.add([
     text(`${user.MP}`, { size: TEXT_SIZE }),
@@ -62,9 +75,12 @@ export default function generateUserStatus(user) {
   });
 
   const trophyIcon = userStatus.add([
-    sprite("tropyhy", { height: ICON_HEIGHT }),
+    sprite("trophy", { height: ICON_HEIGHT }),
     pos(GAP, 4 * GAP + 3 * ICON_HEIGHT),
     area(),
+    {add() {
+      this.hidden = true;
+    }}
   ]);
   const reputationText = userStatus.add([
     text(`${user.reputation}`, { size: TEXT_SIZE }),
@@ -136,5 +152,10 @@ export default function generateUserStatus(user) {
         },
       );
     });
-  }
+  }  
+  statusData.forEach((data, i) => {
+    userStatus.add([
+      sprite(data.sprite.name, Object.assign(data.sprite.opt, {height: ICON_HEIGHT})),
+      pos(GAP, (i + 1) * GAP + i * ICON_HEIGHT),])
+    })
 }

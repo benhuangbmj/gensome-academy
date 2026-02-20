@@ -25,6 +25,9 @@ export default function loadSprites() {
   loadCrew("sprite", "wizarding");
   loadCrew("sprite", "onion");
   loadCrew("sprite", "steel");
+  loadCrew("sprite", "controller");
+  loadCrew("sprite", "config");
+loadCrew("sprite", "star");
   // loadSprite("girl", "sprites/girl.png", {
   //   sliceX: 4,
   //   sliceY: 5,
