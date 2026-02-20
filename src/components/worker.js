@@ -1,3 +1,5 @@
+import personnel from "./utils/personnel";
+
 export default function worker({
   salary,
   efficiency,
@@ -6,7 +8,8 @@ export default function worker({
   capacity = 1,
   usage = new Set(),
 }) {
-  return {
+  const _personnel = personnel(efficiency);
+  return Object.assign({
     id: "worker",
     addToUsage(obj) {
       usage.add(obj);
@@ -18,7 +21,7 @@ export default function worker({
       return salary;
     },
     get workerEfficiency() {
-      return efficiency;
+      return _personnel.personnelEfficiency;
     },
     get workerRate() {
       return rate;
@@ -36,7 +39,7 @@ export default function worker({
       salary = value;
     },
     set workerEfficiency(value) {
-      efficiency = value;
+      _personnel.personnelEfficiency = value;
     },
     set workerRate(value) {
       rate = value;
@@ -50,5 +53,5 @@ export default function worker({
     set workerUsage(value) {
       usage = value;
     },
-  };
+  }, _personnel);
 }

@@ -1,3 +1,4 @@
+import personnel from "./utils/personnel";
 export default function customer({
   performance = 0,
   satisfaction = 50,
@@ -5,7 +6,8 @@ export default function customer({
   isReturning = false,
   type = "student",
 }) {
-  return {
+  const _personnel = personnel();
+  return Object.assign({
     id: "customer",
     get customerAttendance() {
       return attendance;
@@ -42,6 +44,7 @@ export default function customer({
     },
     getStats() {
       return {
+        personnelEfficiency: _personnel.personnelEfficiency,
         performance,
         satisfaction,
         attendance,
@@ -49,5 +52,5 @@ export default function customer({
         type,
       };
     },
-  };
+  }, _personnel);
 }
