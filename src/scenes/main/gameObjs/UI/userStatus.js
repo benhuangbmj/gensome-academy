@@ -1,16 +1,17 @@
-const statusData = [
-  {sprite: {name: "coin", opt: {anim: "shine"}}},
-  {sprite: {name: "controller", opt: {}}},
-  {sprite: {name: "config", opt: {}}},
-  {sprite: {name: "star", opt: {}}},
-  {sprite: {name: "onion", opt:{}}}
-]
+
 export default function generateUserStatus(user) {
-  let GAP = 10;
-  let WIDTH = Math.min(300, width() / 3 - 2 * GAP);
-  let TEXT_SIZE = 24;
-  let ICON_HEIGHT = 36;
-  let HEIGHT = (statusData.length + 1) * GAP + statusData.length * ICON_HEIGHT;
+  const GAP = 10;
+  const WIDTH = Math.min(300, width() / 3 - 2 * GAP);
+  const TEXT_SIZE = 24;
+  const ICON_HEIGHT = 36;
+  const statusData = [
+  {sprite: {name: "coin", opt: {anim: "shine"}},text: () =>user.cash},
+  {sprite: {name: "controller", opt: {}}, text: () =>user.FP},
+  {sprite: {name: "config", opt: {}}, text: () =>user.MP},
+  {sprite: {name: "star", opt: {}}, text: () =>user.reputation},
+  {sprite: {name: "onion", opt:{}}, text: () =>null}
+]
+  const HEIGHT = (statusData.length + 1) * GAP + statusData.length * ICON_HEIGHT;
   const userStatus = add([
     pos(width() - WIDTH - GAP, GAP),
     rect(WIDTH, HEIGHT),
@@ -27,6 +28,9 @@ export default function generateUserStatus(user) {
     pos(userStatus.width - GAP, GAP + (ICON_HEIGHT - TEXT_SIZE) / 2),
     color(BLACK),
     anchor("topright"),
+    {add() {
+      this.hidden = true;
+    }}
   ]);
   cashText.onDraw(() => {
     cashText.text = `${user.cash}`;
@@ -48,6 +52,9 @@ export default function generateUserStatus(user) {
     ),
     color(BLACK),
     anchor("topright"),
+    {add() {
+      this.hidden = true;
+    }}
   ]);
   FPText.onDraw(() => {
     FPText.text = `${user.FP}`;
@@ -69,6 +76,9 @@ export default function generateUserStatus(user) {
     ),
     color(BLACK),
     anchor("topright"),
+    {add() {
+      this.hidden = true;
+    }}
   ]);
   MPText.onDraw(() => {
     MPText.text = `${user.MP}`;
@@ -90,6 +100,9 @@ export default function generateUserStatus(user) {
     ),
     color(BLACK),
     anchor("topright"),
+    {add() {
+      this.hidden = true;
+    }}
   ]);
   reputationText.onDraw(() => {
     reputationText.text = `${user.reputation}`;
@@ -156,6 +169,20 @@ export default function generateUserStatus(user) {
   statusData.forEach((data, i) => {
     userStatus.add([
       sprite(data.sprite.name, Object.assign(data.sprite.opt, {height: ICON_HEIGHT})),
-      pos(GAP, (i + 1) * GAP + i * ICON_HEIGHT),])
+      pos(GAP, (i + 1) * GAP + i * ICON_HEIGHT)]);
+    userStatus.add([
+      text(data.text() !== null ? `${data.text()}` : "", { size: TEXT_SIZE }),
+      pos(
+        userStatus.width - GAP,
+        (i + 1) * GAP + i * ICON_HEIGHT + (ICON_HEIGHT - TEXT_SIZE) / 2,
+      ),
+      color(BLACK),
+      anchor("topright"),
+      {
+        draw() {
+          this.text = data.text() !== null ? `${data.text()}` : "";
+        }
+      }
+    ]);  
     })
 }
