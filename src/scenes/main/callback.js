@@ -3,7 +3,7 @@ import userContext from "./contexts/userContext";
 import levelContext from "./contexts/levelContext";
 import UIContext from "./contexts/UIContext";
 import UI from "./gameObjs/UI";
-import factory from "./gameObjs/factory/factory";
+import config from "../../config";
 import handlers from "./handlers/handlers";
 import makeMainLevel from "./level";
 const workerTypes = ["secretary", "tutor"];
@@ -56,5 +56,17 @@ export default function gensomeAcademy() {
       setCamPos(getCamPos().add(vec2(0, 10)));
     }
   });
+  if (environment === "dev") {
+    onKeyPress((key) => {
+      if (key === "pageup") {
+        config.adjustTimeFlow(0.1);
+        debug.log("current time flow rate: ", config.TIME_FLOW_RATE);
+      }
+      if (key === "pagedown") {
+        config.adjustTimeFlow(10);
+        debug.log("current time flow rate: ", config.TIME_FLOW_RATE);
+      }
+    });
+  }
   onKeyPress(handlers.recruit);
 }
