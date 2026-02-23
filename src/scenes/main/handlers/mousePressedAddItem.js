@@ -8,31 +8,26 @@ export default function mousePressedAddItem(
   isApproved,
   callback = spawnItem,
 ) {
-  item.size = vec2(item.size_w, item.size_h);
   const level = levelContext.provide();
   if (!isApproved || btn != "left") return;
   const tilePos = level.adjustedPos2Tile(mousePos());
   if (!callback) return;
   callback(level, tilePos, item);
-  utils.makeBySize(tilePos, item.size, (tilePos) =>
-    spawnBluePrint(level, tilePos),
-  );
 }
-function spawnItem(level, tilePos, item) {
+export function spawnItem(level, tilePos, item) {
+  item.size = vec2(item.size_w, item.size_h);
   level.spawn(
     [
       sprite(item.sprite, {
         width: item.size_w * level.tileWidth(),
         height: item.size_h * level.tileHeight(),
       }),
-      {
-        add() {
-          console.log("tags", this.tags);
-        },
-      },
       ...makeTags(item),
     ],
     tilePos,
+  );
+  utils.makeBySize(tilePos, item.size, (tilePos) =>
+    spawnBluePrint(level, tilePos),
   );
 }
 function spawnBluePrint(level, tilePos) {

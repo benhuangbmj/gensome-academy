@@ -6,6 +6,8 @@ import UI from "./gameObjs/UI";
 import config from "../../config";
 import handlers from "./handlers/handlers";
 import makeMainLevel from "./level";
+import { spawnItem } from "./handlers/mousePressedAddItem";
+import dataContext from "./contexts/dataContext";
 const workerTypes = ["secretary", "tutor"];
 const GAP = 10;
 export default function gensomeAcademy() {
@@ -69,4 +71,7 @@ export default function gensomeAcademy() {
     });
   }
   onKeyPress(handlers.recruit);
+  const data = dataContext.provide();
+  const item = data.facilities[0];
+  spawnItem(mainLevel, vec2(5, 5), item);
 }
