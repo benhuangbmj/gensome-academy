@@ -69,9 +69,9 @@ export default function gensomeAcademy() {
         debug.log("current time flow rate: ", config.TIME_FLOW_RATE);
       }
     });
+    const data = dataContext.provide();
+    const item = data.facilities[0];
+    spawnItem(mainLevel, vec2(5, 5), item);
   }
   onKeyPress(handlers.recruit);
-  const data = dataContext.provide();
-  const item = data.facilities[0];
-  spawnItem(mainLevel, vec2(5, 5), item);
 }
