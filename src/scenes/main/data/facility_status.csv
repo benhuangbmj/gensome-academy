@@ -1,0 +1,2 @@
+id,facility_id,status_id,site,capacity ,distance
+facility-status-1,facility-1,status-1,true,1,0
